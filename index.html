@@ -8,7 +8,6 @@
 </head>
 <body>
 
-
   <div class="bg-canvas">
     <div class="grid-overlay"></div>
     <div class="fluid-orb orb-1"></div>
@@ -16,250 +15,884 @@
     <div class="fluid-orb orb-3"></div>
   </div>
 
-  <nav class="nav">
-    <div class="brand">
-      <span class="brand-dot"></span>GrowEasy
-    </div>
-    <div class="nav-links">
-      <a href="#features">Features</a>
-      <a href="#community">Community</a>
-      <a href="#stories">Stories</a>
-    </div>
-    <a class="pill" href="#start" id="start-nav">Get Started Free</a>
-  </nav>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-text">
-      <div class="eyebrow">AI-powered marketing for small business</div>
-      <h1>Grow smarter.<br><span class="grad">Not harder.</span></h1>
-      <p class="hero-sub">GrowEasy gives you an AI marketing advisor, instant social content, and a community of real business owners — all in one place.</p>
-      <div class="actions">
-        <a class="btn primary" id="start" href="#features">Start for free</a>
-        <a class="btn secondary" href="#features">See how it works</a>
+  <div id="landing-view">
+    <nav class="nav">
+      <div class="brand">
+        <span class="brand-dot"></span>GrowEasy
       </div>
-      <div class="social-proof">
-        <div class="avatars">
-          <span class="av" style="background:#d1fae5;color:#065f46;">KS</span>
-          <span class="av" style="background:#dbeafe;color:#1e40af;">MT</span>
-          <span class="av" style="background:#fef3c7;color:#92400e;">RN</span>
-          <span class="av" style="background:#ede9fe;color:#5b21b6;">YT</span>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#community">Community</a>
+        <a href="#stories">Stories</a>
+      </div>
+      <button class="pill app-route-btn" data-page="advisor" style="border:none; cursor:pointer;">Launch App</button>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-text">
+        <div class="eyebrow">AI-powered marketing for small business</div>
+        <h1>Grow smarter.<br><span class="grad">Not harder.</span></h1>
+        <p class="hero-sub">GrowEasy gives you an AI marketing advisor, instant social content, and a community of real business owners — all in one place.</p>
+        <div class="actions">
+          <button class="btn primary app-route-btn" data-page="advisor">Start for free</button>
+          <a class="btn secondary" href="#features">See how it works</a>
         </div>
-        <p class="proof-text">Joined by <strong>2,400+</strong> small business owners</p>
-      </div>
-    </div>
-
-    <div class="hero-panel reveal">
-      <div class="panel-header">
-        <span class="panel-label">AI Advisor</span>
-        <span class="status-dot"></span>
-      </div>
-      <div class="chat-bubble ai">
-        👋 What kind of business do you run?
-      </div>
-      <div class="chat-bubble user">
-        I own a small café in Tokyo.
-      </div>
-      <div class="chat-bubble ai">
-        Great! Here are 3 strategies that work well for cafés right now — Instagram Reels, Google review responses, and a loyalty stamp card…
-      </div>
-      <div class="chat-typing">
-        <span></span><span></span><span></span>
+        <div class="social-proof">
+          <div class="avatars">
+            <span class="av" style="background:#d1fae5;color:#065f46;">KS</span>
+            <span class="av" style="background:#dbeafe;color:#1e40af;">MT</span>
+            <span class="av" style="background:#fef3c7;color:#92400e;">RN</span>
+            <span class="av" style="background:#ede9fe;color:#5b21b6;">YT</span>
+          </div>
+          <p class="proof-text">Joined by <strong>2,400+</strong> small business owners</p>
+        </div>
       </div>
 
-      <div class="panel-divider"></div>
+      <div class="hero-panel reveal">
+        <svg width="64" height="64" viewBox="0 0 64 64" style="position:absolute; top:-22px; right:-18px; z-index:2;" fill="none">
+          <path d="M32 4C44 4 56 14 58 28C60 42 50 56 36 58C22 60 8 50 5 36C2 22 12 8 26 5C28 4.5 30 4 32 4Z" fill="var(--amber-light)" stroke="var(--amber)" stroke-width="1.5"/>
+          <path d="M24 32l5 5 11-11" stroke="#c9852e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <div class="panel-header">
+          <span class="panel-label">AI Advisor</span>
+          <span class="status-dot"></span>
+        </div>
+        <div class="chat-bubble ai">
+          👋 What kind of business do you run?
+        </div>
+        <div class="chat-bubble user">
+          I own a small café in Tokyo.
+        </div>
+        <div class="chat-bubble ai">
+          Great! Here are 3 strategies that work well for cafés right now — Instagram Reels, Google review responses, and a loyalty stamp card…
+        </div>
+        <div class="chat-typing">
+          <span></span><span></span><span></span>
+        </div>
 
-      <div class="mini-cards">
-        <div class="mini-card">
-          <div class="mini-icon green">
-            <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        <div class="panel-divider"></div>
+
+        <div class="mini-cards">
+          <div class="mini-card app-route-btn" data-page="generator" style="cursor:pointer;">
+            <div class="mini-icon green">
+              <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+            <div>
+              <div class="mini-title">Post drafted</div>
+              <div class="mini-sub">Instagram · Ready to post</div>
+            </div>
+            <span class="badge green">New</span>
+          </div>
+          <div class="mini-card app-route-btn" data-page="persona" style="cursor:pointer;">
+            <div class="mini-icon blue">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            </div>
+            <div>
+              <div class="mini-title">Persona saved</div>
+              <div class="mini-sub">Yuki, 34 · Freelancer</div>
+            </div>
+            <span class="badge blue">Saved</span>
+          </div>
+        </div>
+
+        <div class="progress-section">
+          <div class="progress-label">
+            <span>Today's checklist</span>
+            <span class="prog-count" id="prog-count">1 / 4</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:25%"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="section-header">
+        <div class="eyebrow">What you get</div>
+        <h2>Everything a small business needs to grow</h2>
+      </div>
+      <div class="features-grid">
+        <div class="feat-card reveal">
+          <div class="feat-icon green">
+            <svg viewBox="0 0 40 40" fill="none">
+              <path d="M6 13C6 9.7 8.7 7 12 7h16c3.3 0 6 2.7 6 6v8c0 3.3-2.7 6-6 6H17l-7 5v-5c-2.2 0-4-1.8-4-4v-10z" fill="currentColor" opacity="0.18"/>
+              <path d="M6 13C6 9.7 8.7 7 12 7h16c3.3 0 6 2.7 6 6v8c0 3.3-2.7 6-6 6H17l-7 5v-5c-2.2 0-4-1.8-4-4v-10z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              <circle cx="15" cy="17" r="1.6" fill="currentColor"/>
+              <circle cx="22" cy="17" r="1.6" fill="currentColor"/>
+              <circle cx="29" cy="17" r="1.6" fill="currentColor"/>
+            </svg>
+          </div>
+          <h3>AI Marketing Advisor</h3>
+          <p>Chat with an AI that understands your business type and gives real, tailored marketing strategies — not generic tips.</p>
+          <button class="feat-link app-route-btn" data-page="advisor" style="background:none; border:none; cursor:pointer;">Open Tool →</button>
+        </div>
+        <div class="feat-card reveal">
+          <div class="feat-icon blue">
+            <svg viewBox="0 0 40 40" fill="none">
+              <path d="M9 17v6c0 1.1.9 2 2 2h2l2 6h3l-1-6h2l11-5V13L19 8 9 13z" fill="currentColor" opacity="0.18"/>
+              <path d="M9 17v6c0 1.1.9 2 2 2h2l2 6h3l-1-6h2l11-5V13L19 8 9 13z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M30 14v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M5 17h4v6H5a1 1 0 01-1-1v-4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" fill="currentColor" fill-opacity="0.18"/>
+            </svg>
+          </div>
+          <h3>Social Post Generator</h3>
+          <p>Input your product or service and get multiple post variations in seconds — ready to copy and paste.</p>
+          <button class="feat-link app-route-btn" data-page="generator" style="background:none; border:none; cursor:pointer;">Open Tool →</button>
+        </div>
+        <div class="feat-card reveal">
+          <div class="feat-icon teal">
+            <svg viewBox="0 0 40 40" fill="none">
+              <rect x="6" y="9" width="28" height="22" rx="5" fill="currentColor" opacity="0.14"/>
+              <rect x="6" y="9" width="28" height="22" rx="5" stroke="currentColor" stroke-width="1.8"/>
+              <circle cx="15" cy="18" r="3.4" fill="currentColor" opacity="0.5"/>
+              <path d="M9.5 26c1-2.8 3-4.2 5.5-4.2s4.5 1.4 5.5 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+              <path d="M24 16h6M24 20h6M24 24h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Persona Builder</h3>
+          <p>Answer a short questionnaire and get a visual profile of your ideal customer — who they are, what they want, and where to find them.</p>
+          <button class="feat-link app-route-btn" data-page="persona" style="background:none; border:none; cursor:pointer;">Open Tool →</button>
+        </div>
+        <div class="feat-card reveal">
+          <div class="feat-icon amber">
+            <svg viewBox="0 0 40 40" fill="none">
+              <rect x="7" y="9" width="26" height="24" rx="5" fill="currentColor" opacity="0.14"/>
+              <rect x="7" y="9" width="26" height="24" rx="5" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M7 16h26" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M13 6v6M27 6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M13 22l2.5 2.5L20 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <circle cx="26" cy="23" r="3" fill="currentColor" opacity="0.4"/>
+              <path d="M13 29h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity="0.5"/>
+            </svg>
+          </div>
+          <h3>Daily Checklist</h3>
+          <p>A simple step-by-step action guide covering Google Business setup, social media basics, and daily growth habits.</p>
+          <button class="feat-link app-route-btn" data-page="checklist" style="background:none; border:none; cursor:pointer;">Open Tool →</button>
+        </div>
+        <div class="feat-card reveal">
+          <div class="feat-icon purple">
+            <svg viewBox="0 0 40 40" fill="none">
+              <circle cx="14" cy="14" r="5" fill="currentColor" opacity="0.45"/>
+              <circle cx="27" cy="14" r="4" fill="currentColor" opacity="0.3"/>
+              <path d="M6 31c1.4-5.4 4.4-8 8-8s6.6 2.6 8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+              <path d="M22 31c1-4 3-6.5 6-6.5s5 2.5 6 6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.65"/>
+              <path d="M19 14h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Community Network</h3>
+          <p>Connect with experienced business owners, share real stories, find collaborators, and get advice from people who've been there.</p>
+          <a class="feat-link" href="#community">Explore →</a>
+        </div>
+        <div class="feat-card reveal">
+          <div class="feat-icon coral">
+            <svg viewBox="0 0 40 40" fill="none">
+              <path d="M7 12c0-2.2 1.8-4 4-4h18c2.2 0 4 1.8 4 4v12c0 2.2-1.8 4-4 4H17l-6 5v-5h-0c-2.2 0-4-1.8-4-4V12z" fill="currentColor" opacity="0.15"/>
+              <path d="M7 12c0-2.2 1.8-4 4-4h18c2.2 0 4 1.8 4 4v12c0 2.2-1.8 4-4 4H17l-6 5v-5h-0c-2.2 0-4-1.8-4-4V12z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M17 14.5c0-1.7 1.4-3 3-3s3 1.3 3 3c0 1.5-1 2.2-2 2.9-.7.5-1 .9-1 1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+              <circle cx="20" cy="23.5" r="1.3" fill="currentColor"/>
+            </svg>
+          </div>
+          <h3>Peer Help Center</h3>
+          <p>Post a question to the community and get answers from fellow owners. Sometimes the best advice comes from someone who's been in your shoes.</p>
+          <a class="feat-link" href="#community">Join →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="community">
+      <div class="section-header">
+        <div class="eyebrow">Real people, real advice</div>
+        <h2>You're not doing this alone</h2>
+        <p class="section-sub">GrowEasy is the only marketing platform that combines AI tools with a real human community.</p>
+      </div>
+      <div class="community-grid">
+        <div class="post-card reveal">
+          <div class="post-top">
+            <div class="av lg" style="background:#d1fae5;color:#065f46;">KS</div>
+            <div>
+              <div class="post-name">Kenji S.</div>
+              <div class="post-meta"><span class="badge green">Café owner</span> · Tokyo</div>
+            </div>
+          </div>
+          <p class="post-body">Posting Instagram Reels every day for 3 months doubled my followers — and I used GrowEasy's generator for every single one.</p>
+          <div class="post-footer">
+            <span>❤️ 48</span><span>💬 12 replies</span>
+          </div>
+        </div>
+        <div class="post-card reveal">
+          <div class="post-top">
+            <div class="av lg" style="background:#dbeafe;color:#1e40af;">MT</div>
+            <div>
+              <div class="post-name">Mika T.</div>
+              <div class="post-meta"><span class="badge blue">Salon owner</span> · Osaka</div>
+            </div>
+          </div>
+          <p class="post-body">Does anyone have a good template for responding to Google reviews? Looking to improve my rating this month.</p>
+          <div class="post-footer">
+            <span>❤️ 21</span><span>💬 8 replies</span>
+          </div>
+        </div>
+        <div class="post-card reveal">
+          <div class="post-top">
+            <div class="av lg" style="background:#fef3c7;color:#92400e;">RN</div>
+            <div>
+              <div class="post-name">Rina N.</div>
+              <div class="post-meta"><span class="badge amber">Boutique</span> · Kyoto</div>
+            </div>
+          </div>
+          <p class="post-body">Looking to collaborate on a summer campaign with another local shop. DM me if you're interested — the more the merrier!</p>
+          <div class="post-footer">
+            <span>❤️ 33</span><span>💬 5 replies</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="stories">
+      <div class="section-header">
+        <div class="eyebrow">Results that speak</div>
+        <h2>Small businesses, big wins</h2>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card reveal">
+          <div class="stat-num green">+40%</div>
+          <div class="stat-label">Revenue growth in 3 months</div>
+          <div class="stat-who">Café owner · SNS strategy</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-num blue">2×</div>
+          <div class="stat-label">New customers from Google</div>
+          <div class="stat-who">Salon owner · Google Business</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-num teal">¥0</div>
+          <div class="stat-label">Ad spend to grow audience</div>
+          <div class="stat-who">Boutique · Community collab</div>
+        </div>
+        <div class="stat-card reveal">
+          <div class="stat-num amber">3 hrs</div>
+          <div class="stat-label">Saved per week on content</div>
+          <div class="stat-who">Online store · Post Generator</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="cta-inner reveal">
+        <div class="eyebrow" style="color:#6ee7b7;">Ready when you are</div>
+        <h2>Start growing today.<br>It's free.</h2>
+        <p>No credit card. No marketing degree. Just your business and an AI that actually understands small business.</p>
+        <button class="btn primary large app-route-btn" data-page="advisor">Get started free</button>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="brand"><span class="brand-dot"></span>GrowEasy</div>
+      <p>Built for small business owners who don't have time to waste.</p>
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Contact</a>
+      </div>
+    </footer>
+  </div>
+ <div id="auth-view" style="display: none; max-width: 460px; margin: 80px auto; padding: 20px;">
+    <div class="hero-panel reveal show" style="background: rgba(255,255,255,0.9); padding: 40px 32px;">
+
+      <!-- Brand -->
+      <div style="text-align: center; margin-bottom: 24px;">
+        <div class="brand" style="justify-content: center; margin-bottom: 12px; font-size: 22px;">
+          <span class="brand-dot" style="width: 12px; height: 12px;"></span>GrowEasy
+        </div>
+      </div>
+
+      <!-- Tab Toggle -->
+      <div style="display: flex; background: rgba(31,41,55,0.06); border-radius: 10px; padding: 4px; margin-bottom: 28px;">
+        <button id="tab-login" onclick="switchAuthTab('login')" style="flex:1; padding: 10px; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; background: white; color: var(--navy); box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">
+          Sign In
+        </button>
+        <button id="tab-register" onclick="switchAuthTab('register')" style="flex:1; padding: 10px; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; background: transparent; color: var(--muted); transition: all 0.2s;">
+          Create Account
+        </button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <form id="login-form">
+        <div style="text-align:center; margin-bottom: 20px;">
+          <h2 style="color: var(--navy); font-size: 22px; font-weight: 800; margin-bottom: 6px;">Welcome back</h2>
+          <p style="color: var(--muted); font-size: 13px;">Access your marketing workspace</p>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Email Address</label>
+          <input type="email" name="email" required placeholder="name@example.com"
+            style="width:100%; padding:12px 16px; border-radius:10px; border:1px solid rgba(31,41,55,0.12); font-size:14px; outline:none; box-sizing:border-box;"
+            onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='rgba(31,41,55,0.12)'">
+        </div>
+
+        <div style="margin-bottom: 24px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+            <label style="font-size:13px; font-weight:600; color:var(--navy);">Password</label>
+            <a href="#" style="font-size:12px; color:var(--teal); font-weight:600; text-decoration:none;">Forgot password?</a>
+          </div>
+          <input type="password" name="password" required placeholder="••••••••"
+            style="width:100%; padding:12px 16px; border-radius:10px; border:1px solid rgba(31,41,55,0.12); font-size:14px; outline:none; box-sizing:border-box;"
+            onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='rgba(31,41,55,0.12)'">
+        </div>
+
+        <button type="submit" class="btn primary" style="width:100%; padding:14px; border:none; font-size:15px; cursor:pointer; border-radius:10px;">
+          Sign In to Workspace
+        </button>
+      </form>
+
+      <!-- REGISTER FORM -->
+      <form id="register-form" style="display:none;">
+        <div style="text-align:center; margin-bottom: 20px;">
+          <h2 style="color: var(--navy); font-size: 22px; font-weight: 800; margin-bottom: 6px;">Create your account</h2>
+          <p style="color: var(--muted); font-size: 13px;">Free forever. No credit card needed.</p>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Your Name</label>
+          <input type="text" name="owner_name" required placeholder="e.g. Kenji Sato"
+            style="width:100%; padding:12px 16px; border-radius:10px; border:1px solid rgba(31,41,55,0.12); font-size:14px; outline:none; box-sizing:border-box;"
+            onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='rgba(31,41,55,0.12)'">
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Email Address</label>
+          <input type="email" name="email" required placeholder="name@example.com"
+            style="width:100%; padding:12px 16px; border-radius:10px; border:1px solid rgba(31,41,55,0.12); font-size:14px; outline:none; box-sizing:border-box;"
+            onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='rgba(31,41,55,0.12)'">
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Password</label>
+          <input type="password" name="password" required placeholder="At least 6 characters"
+            style="width:100%; padding:12px 16px; border-radius:10px; border:1px solid rgba(31,41,55,0.12); font-size:14px; outline:none; box-sizing:border-box;"
+            onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='rgba(31,41,55,0.12)'">
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom: 24px;">
+          <div>
+            <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Business Type</label>
+            <select name="business_type" required
+              style="width:100%; padding:12px 16px; border-radius:10px; border:1px solid rgba(31,41,55,0.12); font-size:14px; outline:none; background:white; box-sizing:border-box;"
+              onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='rgba(31,41,55,0.12)'">
+              <option value="" disabled selected>Select type</option>
+              <option>Café owner</option>
+              <option>Salon owner</option>
+              <option>Boutique</option>
+              <option>Restaurant</option>
+              <option>Freelancer</option>
+              <option>Online store</option>
+              <option>Other</option>
+            </select>
           </div>
           <div>
-            <div class="mini-title">Post drafted</div>
-            <div class="mini-sub">Instagram · Ready to post</div>
+            <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Location</label>
+            <input type="text" name="location" required placeholder="e.g. Tokyo"
+              style="width:100%; padding:12px 16px; border-radius:10px; border:1px solid rgba(31,41,55,0.12); font-size:14px; outline:none; box-sizing:border-box;"
+              onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='rgba(31,41,55,0.12)'">
           </div>
-          <span class="badge green">New</span>
         </div>
-        <div class="mini-card">
-          <div class="mini-icon blue">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+
+        <button type="submit" class="btn primary" style="width:100%; padding:14px; border:none; font-size:15px; cursor:pointer; border-radius:10px;">
+          Create Free Account
+        </button>
+      </form>
+
+      <!-- Footer -->
+      <div style="text-align:center; border-top:1px solid var(--line); padding-top:18px; margin-top:24px;">
+        <button id="back-to-site-btn" style="background:none; border:none; color:var(--muted); font-size:13px; cursor:pointer; font-weight:500;">← Back to home</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="app-view" style="display: none; max-width: 1200px; margin: 0 auto; padding: 20px;">
+    <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; background: rgba(255,255,255,0.85); backdrop-filter: blur(16px); padding: 14px 22px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.7); box-shadow: 0 8px 28px rgba(45,49,66,0.06); flex-wrap: wrap; gap: 14px;">
+      <div class="brand" id="go-home-logo" style="cursor: pointer;"><span class="brand-dot"></span>GrowEasy</div>
+      <nav style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <button class="btn secondary app-route-btn" data-page="dashboard" style="padding:9px 16px; font-size:13px; border-radius:999px;">🏠 Home</button>
+        <button class="btn secondary app-route-btn" data-page="advisor" style="padding:9px 16px; font-size:13px; border-radius:999px;">💬 Advisor</button>
+        <button class="btn secondary app-route-btn" data-page="generator" style="padding:9px 16px; font-size:13px; border-radius:999px;">✨ Post Gen</button>
+        <button class="btn secondary app-route-btn" data-page="persona" style="padding:9px 16px; font-size:13px; border-radius:999px;">🎯 Persona</button>
+        <button class="btn secondary app-route-btn" data-page="checklist" style="padding:9px 16px; font-size:13px; border-radius:999px;">✅ Checklist</button>
+        <button class="btn secondary app-route-btn" data-page="community" style="padding:9px 16px; font-size:13px; border-radius:999px;">👥 Community</button>
+        <button class="btn secondary app-route-btn" data-page="stories" style="padding:9px 16px; font-size:13px; border-radius:999px;">📈 Stories</button>
+        <button class="btn secondary app-route-btn" data-page="goals" style="padding:9px 16px; font-size:13px; border-radius:999px;">🏆 Goals</button>
+        <button class="btn secondary app-route-btn" data-page="report" style="padding:9px 16px; font-size:13px; border-radius:999px;">📊 Report</button>
+        <button class="btn secondary app-route-btn" data-page="knowledge" style="padding:9px 16px; font-size:13px; border-radius:999px;">📚 Knowledge</button>
+        <button class="btn secondary app-route-btn" data-page="promotions" style="padding:9px 16px; font-size:13px; border-radius:999px;">💡 Promotions</button>
+        <button class="btn secondary app-route-btn" data-page="knowledge" style="padding:9px 16px; font-size:13px; border-radius:999px;">📚 Learn</button>
+      </nav>
+      <button class="btn secondary" id="exit-app-btn" style="padding:9px 18px; font-size:13px; border-radius:999px;">← Landing</button>
+    </header>
+
+    <main id="app-workspace" class="hero-panel" style="min-height: 500px; background: rgba(255,255,255,0.9);">
+      
+      <!-- DASHBOARD PAGE -->
+      <div id="page-dashboard" class="app-page" style="display:none;">
+
+        <!-- Welcome Banner -->
+        <div id="dash-welcome" style="background:linear-gradient(135deg, var(--navy), #3d4154); border-radius:var(--radius-xl); padding:28px 32px; margin-bottom:24px; color:white; position:relative; overflow:hidden;">
+          <div style="position:absolute; top:-50px; right:-50px; width:200px; height:200px; border-radius:50%; background:rgba(52,201,142,0.1);"></div>
+          <div style="position:absolute; bottom:-60px; right:60px; width:150px; height:150px; border-radius:50%; background:rgba(179,156,232,0.08);"></div>
+          <div style="position:relative; z-index:1;">
+            <div style="font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:6px;" id="dash-greeting">Good morning</div>
+            <div style="font-size:24px; font-weight:800; margin-bottom:4px;" id="dash-name">Welcome back!</div>
+            <div style="font-size:14px; color:rgba(255,255,255,0.6);" id="dash-business"></div>
           </div>
+        </div>
+
+        <!-- Quick Stats Row -->
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:24px;">
+          <div style="background:var(--green-light); border-radius:var(--radius-lg); padding:18px; text-align:center; border:1px solid rgba(52,201,142,0.15);">
+            <div style="font-size:26px; font-weight:800; color:var(--teal);" id="dash-posts">—</div>
+            <div style="font-size:12px; font-weight:600; color:var(--navy);">Posts made</div>
+            <div style="font-size:11px; color:var(--muted);">this month</div>
+          </div>
+          <div style="background:var(--purple-light); border-radius:var(--radius-lg); padding:18px; text-align:center; border:1px solid rgba(179,156,232,0.15);">
+            <div style="font-size:26px; font-weight:800; color:var(--purple);" id="dash-community">—</div>
+            <div style="font-size:12px; font-weight:600; color:var(--navy);">Community</div>
+            <div style="font-size:11px; color:var(--muted);">posts shared</div>
+          </div>
+          <div style="background:var(--amber-light); border-radius:var(--radius-lg); padding:18px; text-align:center; border:1px solid rgba(243,177,94,0.15);">
+            <div style="font-size:26px; font-weight:800; color:#c9852e;" id="dash-goals-done">—</div>
+            <div style="font-size:12px; font-weight:600; color:var(--navy);">Goals</div>
+            <div style="font-size:11px; color:var(--muted);">completed</div>
+          </div>
+        </div>
+
+        <!-- Checklist Progress -->
+        <div style="background:white; border-radius:var(--radius-lg); padding:22px; margin-bottom:20px; border:1px solid var(--line); box-shadow:0 4px 16px rgba(45,49,66,0.03);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+            <div>
+              <div style="font-weight:700; color:var(--navy); font-size:15px;">✅ Today's checklist</div>
+              <div style="font-size:12px; color:var(--muted); margin-top:2px;" id="dash-checklist-sub">Loading...</div>
+            </div>
+            <button class="btn secondary app-route-btn" data-page="checklist" style="padding:8px 16px; font-size:12px; border-radius:999px;">Open →</button>
+          </div>
+          <div style="background:var(--soft); border-radius:999px; height:10px; overflow:hidden;">
+            <div id="dash-checklist-bar" style="background:linear-gradient(90deg,var(--green),var(--teal)); height:10px; border-radius:999px; width:0%; transition:width 0.6s ease;"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:12px; color:var(--muted);">
+            <span id="dash-checklist-msg"></span>
+            <span id="dash-checklist-pct" style="font-weight:700; color:var(--teal);">0%</span>
+          </div>
+        </div>
+
+        <!-- Active Goals -->
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+            <div style="font-weight:700; color:var(--navy); font-size:15px;">🏆 Active goals</div>
+            <button class="btn secondary app-route-btn" data-page="goals" style="padding:8px 16px; font-size:12px; border-radius:999px;">All goals →</button>
+          </div>
+          <div id="dash-goals" style="display:grid; gap:12px;">
+            <div style="text-align:center; padding:20px; color:var(--muted); font-size:13px;">Loading goals...</div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div style="margin-top:24px; background:var(--soft); border-radius:var(--radius-lg); padding:20px; border:1px solid var(--line);">
+          <div style="font-weight:700; color:var(--navy); font-size:14px; margin-bottom:14px;">⚡ Quick actions</div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn primary app-route-btn" data-page="advisor" style="padding:10px 18px; font-size:13px;">💬 Ask AI Advisor</button>
+            <button class="btn secondary app-route-btn" data-page="generator" style="padding:10px 18px; font-size:13px;">✨ Generate a post</button>
+            <button class="btn secondary app-route-btn" data-page="knowledge" style="padding:10px 18px; font-size:13px;">📚 Read a guide</button>
+            <button class="btn secondary app-route-btn" data-page="community" style="padding:10px 18px; font-size:13px;">👥 Community feed</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="page-advisor" class="app-page">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+          <h2 style="color: var(--navy);">🤖 AI Marketing Advisor</h2>
+          <button onclick="clearAdvisorChat()" style="background:none; border:none; font-size:12px; color:var(--muted); cursor:pointer;">Clear chat</button>
+        </div>
+        <p style="color: var(--muted); margin-bottom: 20px;">Get real customized strategies for your specific industry.</p>
+
+        <!-- Chat Window -->
+        <div id="advisor-chat" style="border:1px solid var(--line); height:340px; border-radius:20px; padding:18px; background:var(--soft); margin-bottom:15px; overflow-y:auto; display:flex; flex-direction:column; gap:10px;">
+          <div class="chat-bubble ai">👋 Welcome! What specific marketing goal are we targeting today?</div>
+        </div>
+
+        <!-- Input -->
+        <div style="display:flex; gap:10px;">
+          <input
+            type="text"
+            id="advisor-input"
+            placeholder="Type your marketing question..."
+            style="flex:1; padding:13px 18px; border-radius:999px; border:1px solid var(--line); font-size:14px; outline:none;"
+            onfocus="this.style.borderColor='var(--green)'"
+            onblur="this.style.borderColor='var(--line)'"
+            onkeydown="if(event.key==='Enter') sendAdvisorMessage()"
+          >
+          <button class="btn primary" onclick="sendAdvisorMessage()" style="padding:0 26px;">Send</button>
+        </div>
+      </div>
+
+      <div id="page-generator" class="app-page" style="display:none;">
+        <h2 style="margin-bottom: 5px; color: var(--navy);">✨ Social Post Generator</h2>
+        <p style="color: var(--muted); margin-bottom: 20px;">Turn simple ideas into ready-to-post content.</p>
+
+        <!-- Input Section -->
+        <div style="background:white; border-radius:12px; padding:20px; margin-bottom:20px; border:1px solid var(--line);">
+          <div style="margin-bottom:14px;">
+            <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">What are you promoting?</label>
+            <input type="text" id="generator-prompt"
+              placeholder="e.g., Cold brew coffee discount this Friday"
+              style="width:100%; padding:12px; border-radius:8px; border:1px solid var(--line); font-size:14px; outline:none; box-sizing:border-box;"
+              onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--line)'"
+              onkeydown="if(event.key==='Enter') generatePosts()">
+          </div>
+          <div style="margin-bottom:16px;">
+            <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Platform</label>
+            <select id="generator-platform"
+              style="padding:10px 14px; border-radius:8px; border:1px solid var(--line); font-size:14px; outline:none; background:white;">
+              <option value="Instagram">Instagram</option>
+              <option value="Twitter/X">Twitter / X</option>
+              <option value="Facebook">Facebook</option>
+              <option value="LINE">LINE</option>
+            </select>
+          </div>
+          <button class="btn primary" onclick="generatePosts()" id="generate-btn" style="padding:12px 28px;">
+            Generate Post Ideas ✨
+          </button>
+        </div>
+
+        <!-- Results Section -->
+        <div id="generator-results" style="display:none;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 style="color:var(--navy); font-size:15px;">Generated Posts</h3>
+            <button onclick="saveGeneratedPost()" class="btn secondary" style="padding:8px 16px; font-size:13px;">Save All 💾</button>
+          </div>
+          <div id="generator-output" style="display:grid; gap:12px;"></div>
+        </div>
+
+        <!-- Saved Posts Section -->
+        <div style="margin-top:28px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 style="color:var(--navy); font-size:15px;">Saved Posts</h3>
+            <button onclick="loadSavedPosts()" style="background:none; border:none; font-size:12px; color:var(--teal); cursor:pointer; font-weight:600;">Refresh ↻</button>
+          </div>
+          <div id="saved-posts" style="display:grid; gap:12px;">
+            <div style="text-align:center; padding:20px; color:var(--muted); font-size:13px;">No saved posts yet.</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="page-persona" class="app-page" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; flex-wrap:wrap; gap:10px;">
+          <h2 style="color: var(--navy);">🎯 Ideal Persona Builder</h2>
+          <button class="btn primary" style="padding:10px 20px; font-size:14px;" onclick="togglePersonaForm()">+ Build a Persona</button>
+        </div>
+        <p style="color: var(--muted); margin-bottom: 20px;">Identify your true high-value target demographics.</p>
+
+        <!-- Persona Form -->
+        <div id="persona-form-box" style="display:none; background:white; border-radius:var(--radius-lg); padding:22px; margin-bottom:24px; border:1px solid var(--line); box-shadow:0 4px 16px rgba(45,49,66,0.04);">
+          <div style="margin-bottom:14px;">
+            <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Persona name <span style="font-weight:400; color:var(--muted);">(optional)</span></label>
+            <input type="text" id="persona-name" placeholder="e.g. Yuki — leave blank for AI to suggest"
+              style="width:100%; padding:10px 14px; border-radius:8px; border:1px solid var(--line); font-size:14px; outline:none; box-sizing:border-box;">
+          </div>
+          <div style="margin-bottom:16px;">
+            <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Describe your ideal customer</label>
+            <textarea id="persona-description" rows="3" placeholder="e.g. Young professionals who want quick healthy lunch options near their office"
+              style="width:100%; padding:10px 14px; border-radius:8px; border:1px solid var(--line); font-size:14px; outline:none; resize:vertical; box-sizing:border-box; font-family:inherit;"></textarea>
+          </div>
+          <div style="display:flex; justify-content:flex-end; gap:10px;">
+            <button onclick="togglePersonaForm()" style="background:none; border:none; color:var(--muted); cursor:pointer; font-size:14px;">Cancel</button>
+            <button class="btn primary" id="persona-submit-btn" onclick="submitPersona()" style="padding:10px 24px; font-size:14px;">Generate Persona ✨</button>
+          </div>
+        </div>
+
+        <!-- Diagram Display -->
+        <div id="persona-diagram-container" style="margin-bottom:28px;"></div>
+
+        <!-- Saved Personas List -->
+        <div>
+          <h3 style="color:var(--navy); font-size:15px; margin-bottom:12px;">Saved Personas</h3>
+          <div id="persona-list" style="display:flex; gap:10px; flex-wrap:wrap;">
+            <div style="color:var(--muted); font-size:13px;">Loading...</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="page-checklist" class="app-page" style="display:none;">
+        <h2 style="margin-bottom: 5px; color: var(--navy);">✅ Daily Growth Habits Checklist</h2>
+        <p style="color: var(--muted); margin-bottom: 20px;">Small bite-sized daily achievements to secure long term SEO rankings.</p>
+
+        <!-- Progress Bar -->
+        <div style="background:linear-gradient(135deg, var(--green-light), var(--teal-light)); border-radius:20px; padding:22px; margin-bottom:22px; border:1px solid var(--line);">
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+            <span style="font-size:13px; font-weight:600; color:var(--navy);">Today's progress</span>
+            <span id="checklist-count" style="font-size:13px; font-weight:700; color:var(--teal);">0 / 0</span>
+          </div>
+          <div style="background:rgba(255,255,255,0.6); border-radius:99px; height:9px;">
+            <div id="checklist-bar" style="background:linear-gradient(90deg, var(--green), var(--teal)); height:9px; border-radius:99px; width:0%; transition:width 0.4s ease;"></div>
+          </div>
+        </div>
+
+        <!-- Task List -->
+        <div id="checklist-tasks" style="display:grid; gap:12px;">
+          <div style="text-align:center; padding:40px; color:var(--muted);">Loading tasks...</div>
+        </div>
+      </div>
+
+
+      <div id="page-community" class="app-page" style="display:none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
           <div>
-            <div class="mini-title">Persona saved</div>
-            <div class="mini-sub">Yuki, 34 · Freelancer</div>
+            <h2 style="color: var(--navy); margin-bottom: 5px;">👥 Peer Community Network</h2>
+            <p style="color: var(--muted);">Real questions and answers from verified owners.</p>
           </div>
-          <span class="badge blue">Saved</span>
+          <button class="btn primary" style="padding: 10px 20px; font-size: 14px;" onclick="toggleNewPostBox()">+ Share an Update</button>
         </div>
-      </div>
 
-      <div class="progress-section">
-        <div class="progress-label">
-          <span>Today's checklist</span>
-          <span class="prog-count" id="prog-count">1 / 4</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:25%"></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FEATURES -->
-  <section class="section" id="features">
-    <div class="section-header">
-      <div class="eyebrow">What you get</div>
-      <h2>Everything a small business needs to grow</h2>
-    </div>
-    <div class="features-grid">
-      <div class="feat-card reveal">
-        <div class="feat-icon green">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-        </div>
-        <h3>AI Marketing Advisor</h3>
-        <p>Chat with an AI that understands your business type and gives real, tailored marketing strategies — not generic tips.</p>
-        <a class="feat-link" href="#start">Try it →</a>
-      </div>
-      <div class="feat-card reveal">
-        <div class="feat-icon blue">
-          <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h14"/><path d="M18 11l2 2 4-4"/></svg>
-        </div>
-        <h3>Social Post Generator</h3>
-        <p>Input your product or service and get multiple post variations in seconds — ready to copy and paste.</p>
-        <a class="feat-link" href="#start">Try it →</a>
-      </div>
-      <div class="feat-card reveal">
-        <div class="feat-icon teal">
-          <svg viewBox="0 0 24 24"><path d="M4 20c2-4 5-6 8-6s6 2 8 6"/><circle cx="12" cy="9" r="4"/></svg>
-        </div>
-        <h3>Persona Builder</h3>
-        <p>Answer a short questionnaire and get a visual profile of your ideal customer — who they are, what they want, and where to find them.</p>
-        <a class="feat-link" href="#start">Try it →</a>
-      </div>
-      <div class="feat-card reveal">
-        <div class="feat-icon amber">
-          <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-        </div>
-        <h3>Daily Checklist</h3>
-        <p>A simple step-by-step action guide covering Google Business setup, social media basics, and daily growth habits.</p>
-        <a class="feat-link" href="#start">Try it →</a>
-      </div>
-      <div class="feat-card reveal">
-        <div class="feat-icon purple">
-          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-        </div>
-        <h3>Community Network</h3>
-        <p>Connect with experienced business owners, share real stories, find collaborators, and get advice from people who've been there.</p>
-        <a class="feat-link" href="#community">Explore →</a>
-      </div>
-      <div class="feat-card reveal">
-        <div class="feat-icon coral">
-          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-        </div>
-        <h3>Peer Help Center</h3>
-        <p>Post a question to the community and get answers from fellow owners. Sometimes the best advice comes from someone who's been in your shoes.</p>
-        <a class="feat-link" href="#community">Join →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- COMMUNITY -->
-  <section class="section community-section" id="community">
-    <div class="section-header">
-      <div class="eyebrow">Real people, real advice</div>
-      <h2>You're not doing this alone</h2>
-      <p class="section-sub">GrowEasy is the only marketing platform that combines AI tools with a real human community.</p>
-    </div>
-    <div class="community-grid">
-      <div class="post-card reveal">
-        <div class="post-top">
-          <div class="av lg" style="background:#d1fae5;color:#065f46;">KS</div>
-          <div>
-            <div class="post-name">Kenji S.</div>
-            <div class="post-meta"><span class="badge green">Café owner</span> · Tokyo</div>
+        <!-- New Post Box (hidden by default) -->
+        <div id="new-post-box" style="display:none; background:white; border-radius:var(--radius-lg); padding:22px; margin-bottom:20px; border:1px solid var(--line); box-shadow:0 4px 16px rgba(45,49,66,0.04);">
+          <textarea id="new-post-text" placeholder="Share a tip, question, or win with the community..." rows="3"
+            style="width:100%; padding:12px; border-radius:8px; border:1px solid var(--line); font-size:14px; resize:vertical; box-sizing:border-box; font-family:inherit;"></textarea>
+          <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:12px;">
+            <button onclick="toggleNewPostBox()" style="background:none; border:none; color:var(--muted); cursor:pointer; font-size:14px;">Cancel</button>
+            <button class="btn primary" onclick="submitPost()" style="padding:8px 20px; font-size:14px;">Post</button>
           </div>
         </div>
-        <p class="post-body">Posting Instagram Reels every day for 3 months doubled my followers — and I used GrowEasy's generator for every single one.</p>
-        <div class="post-footer">
-          <span>❤️ 48</span><span>💬 12 replies</span>
+
+        <!-- Posts Feed -->
+        <div id="community-feed" style="display: grid; gap: 16px; margin-top: 20px;">
+          <div style="text-align:center; padding:40px; color:var(--muted);">Loading posts...</div>
         </div>
       </div>
-      <div class="post-card reveal">
-        <div class="post-top">
-          <div class="av lg" style="background:#dbeafe;color:#1e40af;">MT</div>
-          <div>
-            <div class="post-name">Mika T.</div>
-            <div class="post-meta"><span class="badge blue">Salon owner</span> · Osaka</div>
+
+
+      <div id="page-stories" class="app-page" style="display:none;">
+
+        <!-- Hero Banner -->
+        <div style="background: linear-gradient(135deg, var(--green-light), var(--teal-light)); border-radius: var(--radius-lg); padding: 32px 28px; margin-bottom: 28px; position: relative; overflow: hidden; border: 1px solid var(--line);">
+          <div style="position:relative; z-index:1; display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:18px;">
+            <div style="max-width: 480px;">
+              <div style="display:inline-flex; align-items:center; gap:6px; background:white; padding:5px 12px; border-radius:99px; font-size:12px; font-weight:700; color:var(--teal); margin-bottom:14px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 17l6-6 4 4 8-8"/><path d="M17 7h4v4"/></svg>
+                Verified results
+              </div>
+              <h2 style="color: var(--navy); font-size: 26px; margin-bottom: 8px; line-height:1.25;">Member growth case studies</h2>
+              <p style="color: var(--muted); font-size: 14px; line-height:1.6;">Real milestones achieved by business owners using GrowEasy — generated and shared by our community.</p>
+            </div>
+            <button class="btn primary" style="padding:13px 24px; font-size:14px; white-space:nowrap; box-shadow:0 4px 14px rgba(15,157,88,0.25);" onclick="toggleStoryForm()">+ Share your story</button>
+          </div>
+          <svg width="180" height="180" viewBox="0 0 180 180" style="position:absolute; right:-30px; top:-30px; opacity:0.5;">
+            <circle cx="90" cy="90" r="90" fill="var(--green-mid)" opacity="0.3"/>
+            <circle cx="60" cy="60" r="40" fill="var(--teal)" opacity="0.08"/>
+          </svg>
+        </div>
+
+        <!-- Story Form -->
+        <div id="story-form-box" style="display:none; background:white; border-radius:var(--radius-lg); padding:24px; margin-bottom:28px; border:1px solid var(--line); box-shadow:0 4px 16px rgba(31,41,55,0.04);">
+          <h3 style="color:var(--navy); font-size:16px; margin-bottom:18px;">Tell us what you achieved</h3>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;">
+            <div>
+              <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">What did you achieve?</label>
+              <input type="text" id="story-achievement" placeholder="e.g. Revenue Growth, Foot Traffic"
+                style="width:100%; padding:11px 14px; border-radius:10px; border:1px solid var(--line); font-size:14px; outline:none; box-sizing:border-box;">
+            </div>
+            <div>
+              <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Timeframe</label>
+              <input type="text" id="story-timeframe" placeholder="e.g. 3 months"
+                style="width:100%; padding:11px 14px; border-radius:10px; border:1px solid var(--line); font-size:14px; outline:none; box-sizing:border-box;">
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px;">
+            <div>
+              <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Number</label>
+              <input type="text" id="story-metric-value" placeholder="e.g. 40"
+                style="width:100%; padding:11px 14px; border-radius:10px; border:1px solid var(--line); font-size:14px; outline:none; box-sizing:border-box;">
+            </div>
+            <div>
+              <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Unit</label>
+              <select id="story-metric-unit"
+                style="width:100%; padding:11px 14px; border-radius:10px; border:1px solid var(--line); font-size:14px; outline:none; background:white; box-sizing:border-box;">
+                <option value="%">% (percent)</option>
+                <option value="x">× (times more)</option>
+                <option value="hrs">hrs (hours saved)</option>
+                <option value="">none</option>
+              </select>
+            </div>
+          </div>
+          <div style="display:flex; justify-content:flex-end; gap:10px;">
+            <button onclick="toggleStoryForm()" style="background:none; border:none; color:var(--muted); cursor:pointer; font-size:14px;">Cancel</button>
+            <button class="btn primary" id="story-submit-btn" onclick="submitStory()" style="padding:11px 26px; font-size:14px;">Generate & share ✨</button>
           </div>
         </div>
-        <p class="post-body">Does anyone have a good template for responding to Google reviews? Looking to improve my rating this month.</p>
-        <div class="post-footer">
-          <span>❤️ 21</span><span>💬 8 replies</span>
+
+        <!-- Dynamic Stories Grid (populated by JS) -->
+        <div id="stories-grid">
+          <div style="text-align:center; padding:40px; color:var(--muted);">Loading stories...</div>
         </div>
       </div>
-      <div class="post-card reveal">
-        <div class="post-top">
-          <div class="av lg" style="background:#fef3c7;color:#92400e;">RN</div>
-          <div>
-            <div class="post-name">Rina N.</div>
-            <div class="post-meta"><span class="badge amber">Boutique</span> · Kyoto</div>
+
+      <!-- GOALS PAGE -->
+      <div id="page-goals" class="app-page" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; flex-wrap:wrap; gap:10px;">
+          <h2 style="color:var(--navy);">🏆 Business Goal Tracker</h2>
+          <button class="btn primary" onclick="toggleGoalForm()" style="padding:10px 20px; font-size:14px;">+ New Goal</button>
+        </div>
+        <p style="color:var(--muted); margin-bottom:20px;">Set targets, track progress, and celebrate your wins.</p>
+
+        <!-- New Goal Form -->
+        <div id="goal-form-box" style="display:none; background:white; border-radius:var(--radius-lg); padding:22px; margin-bottom:24px; border:1px solid var(--line); box-shadow:0 4px 16px rgba(45,49,66,0.04);">
+          <h3 style="color:var(--navy); font-size:15px; margin-bottom:16px;">Set a new goal</h3>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;">
+            <div style="grid-column:1/-1;">
+              <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">What is your goal?</label>
+              <input type="text" id="goal-title" placeholder="e.g. Get 500 Instagram followers"
+                style="width:100%; padding:11px 14px; border-radius:10px; border:1px solid var(--line); font-size:14px; outline:none; box-sizing:border-box;">
+            </div>
+            <div>
+              <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Target number</label>
+              <input type="number" id="goal-target" placeholder="e.g. 500" min="1"
+                style="width:100%; padding:11px 14px; border-radius:10px; border:1px solid var(--line); font-size:14px; outline:none; box-sizing:border-box;">
+            </div>
+            <div>
+              <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Unit</label>
+              <select id="goal-unit" style="width:100%; padding:11px 14px; border-radius:10px; border:1px solid var(--line); font-size:14px; outline:none; background:white; box-sizing:border-box;">
+                <option value="followers">followers</option>
+                <option value="¥">¥ (revenue)</option>
+                <option value="customers">customers</option>
+                <option value="reviews">reviews</option>
+                <option value="posts">posts</option>
+                <option value="visits">visits</option>
+              </select>
+            </div>
+            <div style="grid-column:1/-1;">
+              <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Deadline</label>
+              <input type="date" id="goal-deadline"
+                style="width:100%; padding:11px 14px; border-radius:10px; border:1px solid var(--line); font-size:14px; outline:none; box-sizing:border-box;">
+            </div>
+          </div>
+          <div style="display:flex; justify-content:flex-end; gap:10px;">
+            <button onclick="toggleGoalForm()" style="background:none; border:none; color:var(--muted); cursor:pointer; font-size:14px;">Cancel</button>
+            <button class="btn primary" onclick="createGoal()" style="padding:10px 24px; font-size:14px;">Create Goal 🏆</button>
           </div>
         </div>
-        <p class="post-body">Looking to collaborate on a summer campaign with another local shop. DM me if you're interested — the more the merrier!</p>
-        <div class="post-footer">
-          <span>❤️ 33</span><span>💬 5 replies</span>
+
+        <!-- Goals List -->
+        <div id="goals-list" style="display:grid; gap:16px;">
+          <div style="text-align:center; padding:40px; color:var(--muted);">Loading goals...</div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- SUCCESS STORIES -->
-  <section class="section" id="stories">
-    <div class="section-header">
-      <div class="eyebrow">Results that speak</div>
-      <h2>Small businesses, big wins</h2>
-    </div>
-    <div class="stats-grid">
-      <div class="stat-card reveal">
-        <div class="stat-num green">+40%</div>
-        <div class="stat-label">Revenue growth in 3 months</div>
-        <div class="stat-who">Café owner · SNS strategy</div>
-      </div>
-      <div class="stat-card reveal">
-        <div class="stat-num blue">2×</div>
-        <div class="stat-label">New customers from Google</div>
-        <div class="stat-who">Salon owner · Google Business</div>
-      </div>
-      <div class="stat-card reveal">
-        <div class="stat-num teal">¥0</div>
-        <div class="stat-label">Ad spend to grow audience</div>
-        <div class="stat-who">Boutique · Community collab</div>
-      </div>
-      <div class="stat-card reveal">
-        <div class="stat-num amber">3 hrs</div>
-        <div class="stat-label">Saved per week on content</div>
-        <div class="stat-who">Online store · Post Generator</div>
-      </div>
-    </div>
-  </section>
+      <!-- REPORT CARD PAGE -->
+      <div id="page-report" class="app-page" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; flex-wrap:wrap; gap:10px;">
+          <h2 style="color:var(--navy);">📊 Monthly Report Card</h2>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <input type="month" id="report-month"
+              style="padding:8px 12px; border-radius:10px; border:1px solid var(--line); font-size:13px; outline:none; color:var(--navy);">
+            <button class="btn primary" onclick="loadReport()" style="padding:9px 18px; font-size:13px;">View</button>
+          </div>
+        </div>
+        <p style="color:var(--muted); margin-bottom:24px;">A summary of your marketing activity and progress this month.</p>
 
-  <!-- CTA -->
-  <section class="cta-section">
-    <div class="cta-inner reveal">
-      <div class="eyebrow" style="color:#6ee7b7;">Ready when you are</div>
-      <h2>Start growing today.<br>It's free.</h2>
-      <p>No credit card. No marketing degree. Just your business and an AI that actually understands small business.</p>
-      <a class="btn primary large" href="#start" id="cta-btn">Get started free</a>
-    </div>
-  </section>
+        <div id="report-content">
+          <div style="text-align:center; padding:40px; color:var(--muted);">Loading report...</div>
+        </div>
+      </div>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="brand"><span class="brand-dot"></span>GrowEasy</div>
-    <p>Built for small business owners who don't have time to waste.</p>
-    <div class="footer-links">
-      <a href="#">Privacy</a>
-      <a href="#">Terms</a>
-      <a href="#">Contact</a>
-    </div>
-  </footer>
+      <!-- KNOWLEDGE BASE PAGE -->
+      <div id="page-knowledge" class="app-page" style="display:none;">
+        <div style="margin-bottom:5px;">
+          <h2 style="color:var(--navy);">📚 Marketing Knowledge Base</h2>
+        </div>
+        <p style="color:var(--muted); margin-bottom:20px;">Practical guides to help you grow your business — no experience needed.</p>
+
+        <!-- Category Filter -->
+        <div id="knowledge-filters" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px;">
+          <button onclick="filterKnowledge('all')" id="filter-all"
+            class="knowledge-filter active-filter"
+            style="padding:8px 16px; border-radius:999px; border:1px solid var(--line); background:var(--navy); color:white; font-size:13px; font-weight:600; cursor:pointer;">
+            All
+          </button>
+        </div>
+
+        <!-- Article Grid -->
+        <div id="knowledge-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:18px;">
+          <div style="text-align:center; padding:40px; color:var(--muted);">Loading articles...</div>
+        </div>
+
+        <!-- Article Reader (hidden by default) -->
+        <div id="article-reader" style="display:none; position:fixed; inset:0; background:rgba(45,49,66,0.5); z-index:500; padding:20px; overflow-y:auto;">
+          <div style="max-width:680px; margin:40px auto; background:white; border-radius:var(--radius-xl); padding:36px; position:relative;">
+            <button onclick="closeArticle()" style="position:absolute; top:20px; right:20px; background:var(--soft); border:none; border-radius:50%; width:36px; height:36px; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center;">×</button>
+            <div id="article-body"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KNOWLEDGE BASE PAGE -->
+      <div id="page-knowledge" class="app-page" style="display:none;">
+        <h2 style="color:var(--navy); margin-bottom:5px;">📚 Marketing Knowledge Base</h2>
+        <p style="color:var(--muted); margin-bottom:20px;">Practical guides to help you grow your business step by step.</p>
+
+        <!-- Category Filter -->
+        <div id="knowledge-filters" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:22px;"></div>
+
+        <!-- Article Grid -->
+        <div id="knowledge-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:16px;">
+          <div style="text-align:center; padding:40px; color:var(--muted);">Loading articles...</div>
+        </div>
+
+        <!-- Article Reader (hidden until opened) -->
+        <div id="knowledge-reader" style="display:none; position:fixed; inset:0; background:rgba(45,49,66,0.5); backdrop-filter:blur(4px); z-index:200; display:none; align-items:center; justify-content:center; padding:20px;">
+          <div style="background:white; border-radius:var(--radius-xl); max-width:640px; width:100%; max-height:85vh; overflow-y:auto; padding:32px; position:relative; box-shadow:0 30px 60px rgba(45,49,66,0.2);">
+            <button onclick="closeArticle()" style="position:absolute; top:16px; right:16px; background:var(--soft); border:none; width:32px; height:32px; border-radius:50%; font-size:16px; cursor:pointer; color:var(--navy);">×</button>
+            <div id="article-body"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROMOTIONS PAGE -->
+      <div id="page-promotions" class="app-page" style="display:none;">
+        <h2 style="color:var(--navy); margin-bottom:5px;">💡 Promotion Ideas Bank</h2>
+        <p style="color:var(--muted); margin-bottom:20px;">Proven promotion ideas for small businesses. Save your favorites and track what you've tried.</p>
+
+        <!-- Stats row -->
+        <div style="display:flex; gap:12px; margin-bottom:20px; flex-wrap:wrap;">
+          <div style="background:var(--green-light); border-radius:var(--radius-lg); padding:14px 20px; display:flex; align-items:center; gap:10px; border:1px solid rgba(52,201,142,0.15);">
+            <span style="font-size:20px;">🔖</span>
+            <div>
+              <div style="font-size:18px; font-weight:800; color:var(--teal);" id="promo-saved-count">0</div>
+              <div style="font-size:11px; color:var(--muted);">saved</div>
+            </div>
+          </div>
+          <div style="background:var(--amber-light); border-radius:var(--radius-lg); padding:14px 20px; display:flex; align-items:center; gap:10px; border:1px solid rgba(243,177,94,0.15);">
+            <span style="font-size:20px;">✅</span>
+            <div>
+              <div style="font-size:18px; font-weight:800; color:#c9852e;" id="promo-tried-count">0</div>
+              <div style="font-size:11px; color:var(--muted);">tried</div>
+            </div>
+          </div>
+          <!-- Filter: All / Saved -->
+          <div style="display:flex; gap:8px; align-items:center; margin-left:auto;">
+            <button id="promo-filter-all" onclick="filterPromos('all')"
+              style="padding:8px 16px; border-radius:999px; border:1px solid var(--line); font-size:13px; font-weight:600; cursor:pointer; background:var(--navy); color:white;">All</button>
+            <button id="promo-filter-saved" onclick="filterPromos('saved')"
+              style="padding:8px 16px; border-radius:999px; border:1px solid var(--line); font-size:13px; font-weight:600; cursor:pointer; background:white; color:var(--muted);">Saved</button>
+          </div>
+        </div>
+
+        <!-- Category pills -->
+        <div id="promo-categories" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;"></div>
+
+        <!-- Ideas grid -->
+        <div id="promo-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:16px;">
+          <div style="text-align:center; padding:40px; color:var(--muted);">Loading ideas...</div>
+        </div>
+      </div>
+
+    </main>
+  </div>
 
   <div id="toast" class="toast"></div>
   <script src="script.js"></script>
