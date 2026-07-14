@@ -153,8 +153,80 @@ const authView = document.getElementById('auth-view');
 const appView = document.getElementById('app-view');
 const appPages = document.querySelectorAll('.app-page');
 
+// ─── FLOATING DASHBOARD ILLUSTRATIONS ─────────────────────────
+// Decorative only (aria-hidden). Animation is CSS (floatUp keyframe);
+// this just randomizes each illustration so the drift feels organic
+// instead of a row of identical clones moving in lockstep.
+(function initFloatingIllustrations() {
+  const host = document.getElementById('app-floaters');
+  if (!host) return;
+
+  // Small-business & marketing themed line-icon set, colored with brand tokens
+  const icons = [
+    { color: 'var(--amber)',  svg: '<path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/>' },              // shopping bag
+    { color: 'var(--coral)',  svg: '<path d="M3 11l18-5v14L3 15v-4z"/><path d="M3 15v4a2 2 0 002 2h1v-6"/>' },                                                       // megaphone
+    { color: 'var(--green)',  svg: '<path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/>' },                                                                     // trending up / growth
+    { color: 'var(--purple)', svg: '<path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/>' },       // camera
+    { color: 'var(--blue)',   svg: '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>' },                                       // map pin
+    { color: 'var(--pink)',   svg: '<path d="M20 12v9a1 1 0 01-1 1H5a1 1 0 01-1-1v-9"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C9 2 12 7 12 7z"/>' }, // gift
+    { color: 'var(--teal)',   svg: '<path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4z"/><path d="M6 1v3M10 1v3M14 1v3"/>' },          // coffee cup
+    { color: 'var(--navy)',   svg: '<path d="M9 21h6"/><path d="M12 3a6 6 0 00-3.5 10.9c.4.32.7.82.7 1.35V17h5.6v-1.75c0-.53.3-1.03.7-1.35A6 6 0 0012 3z"/>' },       // lightbulb / idea
+    { color: 'var(--blue)',   svg: '<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>' },                                                          // social chat
+  ];
+
+  const COUNT = 16;
+  for (let i = 0; i < COUNT; i++) {
+    const icon = icons[i % icons.length];
+    const size     = 18 + Math.random() * 22;        // 18–40px
+    const left     = Math.random() * 100;             // 0–100%
+    const duration = 16 + Math.random() * 14;          // 16–30s per loop
+    const delay    = -Math.random() * duration;        // negative = starts mid-flight, staggers them
+    const drift    = (Math.random() * 80 - 40).toFixed(0); // -40 to 40px horizontal wander
+    const spin     = (Math.random() * 40 - 20).toFixed(0); // -20 to 20deg rotation
+    const opacity  = (0.08 + Math.random() * 0.14).toFixed(2);
+
+    const el = document.createElement('div');
+    el.className = 'floater';
+    el.style.cssText = `
+      left:${left}%;
+      width:${size}px; height:${size}px;
+      color:${icon.color};
+      animation-duration:${duration}s;
+      animation-delay:${delay}s;
+      --floater-drift:${drift}px;
+      --floater-spin:${spin}deg;
+      --floater-opacity:${opacity};
+    `;
+    el.innerHTML = `<svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${icon.svg}</svg>`;
+    host.appendChild(el);
+  }
+})();
+
 let pendingTargetPage = 'dashboard'; // Defaults to dashboard after logging in
 let isLoggedIn = false; // Tracks whether the user has already authenticated this session
+let currentUser = null; // Holds the logged-in user's info for the sidebar panel
+
+const PAGE_TITLES = {
+  dashboard:  'Home',
+  advisor:    'AI Advisor',
+  generator:  'Post Generator',
+  persona:    'Persona Builder',
+  checklist:  'Daily Checklist',
+  community:  'Community',
+  stories:    'Success Stories',
+  goals:      'Goals',
+  report:     'Monthly Report',
+  knowledge:  'Knowledge Base',
+  promotions: 'Promotion Ideas',
+};
+
+function setActiveNav(pageId) {
+  document.querySelectorAll('.side-link[data-page]').forEach(link => {
+    link.classList.toggle('active', link.getAttribute('data-page') === pageId);
+  });
+  const titleEl = document.getElementById('app-page-title');
+  if (titleEl) titleEl.textContent = PAGE_TITLES[pageId] || 'GrowEasy';
+}
 
 function navigateToPage(pageId) {
   pendingTargetPage = pageId; // Keep track of where they wanted to go
@@ -163,11 +235,12 @@ function navigateToPage(pageId) {
     // Already authenticated this session — go straight into the app
     landingView.style.display = 'none';
     authView.style.display = 'none';
-    appView.style.display = 'block';
+    appView.style.display = 'flex';
 
     appPages.forEach(page => page.style.display = 'none');
     const targetPage = document.getElementById(`page-${pageId}`);
     if (targetPage) targetPage.style.display = 'block';
+    setActiveNav(pageId);
 
     // Trigger the page's own data loader directly (avoid re-dispatching the nav click,
     // which would call navigateToPage() again and loop)
@@ -182,7 +255,8 @@ function navigateToPage(pageId) {
       }
     }, 0);
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const workspace = document.getElementById('app-workspace');
+    if (workspace) workspace.scrollTo({ top: 0, behavior: 'smooth' });
     return;
   }
 
@@ -201,10 +275,16 @@ function navigateToPage(pageId) {
 
 function exitAppView() {
   isLoggedIn = false;
+  currentUser = null;
   appView.style.display = 'none';
   authView.style.display = 'none';
   landingView.style.display = 'block';
   showToast('Returned to main site');
+
+  // Actually end the server-side session too, not just the client view
+  const formData = new FormData();
+  formData.append('action', 'logout');
+  fetch('auth.php', { method: 'POST', body: formData }).catch(() => {});
 }
 
 // Event bindings for custom routing attributes
@@ -1118,29 +1198,28 @@ async function loadPersonaList() {
 
     if (!data.success || data.personas.length === 0) {
       list.innerHTML = `
-        <div style="text-align:center; padding:36px 20px; background:white; border-radius:var(--radius-lg); border:1px dashed var(--line); width:100%;">
-          <svg width="48" height="48" viewBox="0 0 40 40" fill="none" style="margin:0 auto 10px;">
-            <rect x="6" y="9" width="28" height="22" rx="5" fill="var(--purple)" opacity="0.14"/>
-            <rect x="6" y="9" width="28" height="22" rx="5" stroke="var(--purple)" stroke-width="1.8"/>
-            <circle cx="15" cy="18" r="3.4" fill="var(--purple)" opacity="0.5"/>
-            <path d="M9.5 26c1-2.8 3-4.2 5.5-4.2s4.5 1.4 5.5 4.2" stroke="var(--purple)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-          </svg>
-          <p style="color:var(--muted); font-size:13px;">No personas yet. Build your first one above.</p>
+        <div class="persona-empty">
+          <div class="persona-empty-icon">
+            <svg width="22" height="22" viewBox="0 0 40 40" fill="none">
+              <rect x="6" y="9" width="28" height="22" rx="5" fill="var(--purple)" opacity="0.14"/>
+              <rect x="6" y="9" width="28" height="22" rx="5" stroke="var(--purple)" stroke-width="1.8"/>
+              <circle cx="15" cy="18" r="3.4" fill="var(--purple)" opacity="0.5"/>
+              <path d="M9.5 26c1-2.8 3-4.2 5.5-4.2s4.5 1.4 5.5 4.2" stroke="var(--purple)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <p>No personas yet. Build your first one above.</p>
         </div>`;
       return;
     }
 
     list.innerHTML = data.personas.map(p => `
-      <div onclick='showPersonaFromList(${JSON.stringify(p).replace(/'/g, "&apos;")})'
-        style="background:white; border:1px solid var(--line); border-radius:10px; padding:12px 16px; cursor:pointer; display:flex; align-items:center; gap:10px; transition:border-color 0.2s;"
-        onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--line)'">
-        <div class="av" style="background:#ede9fe; color:#5b21b6; width:32px; height:32px; font-size:13px;">${p.name.substring(0,2).toUpperCase()}</div>
+      <div class="persona-mini" onclick='showPersonaFromList(${JSON.stringify(p).replace(/'/g, "&apos;")})'>
+        <div class="persona-mini-avatar">${p.name.substring(0,2).toUpperCase()}</div>
         <div>
-          <div style="font-weight:700; font-size:13px; color:var(--navy);">${p.name}</div>
-          <div style="font-size:11px; color:var(--muted);">${p.age} · ${p.occupation}</div>
+          <div class="persona-mini-name">${p.name}</div>
+          <div class="persona-mini-sub">${p.age} · ${p.occupation}</div>
         </div>
-        <button onclick="event.stopPropagation(); deletePersonaCard(${p.id}, this)"
-          style="background:none; border:none; color:var(--muted); font-size:16px; cursor:pointer; margin-left:6px;">×</button>
+        <button class="persona-mini-delete" onclick="event.stopPropagation(); deletePersonaCard(${p.id}, this)">×</button>
       </div>
     `).join('');
 
@@ -1180,109 +1259,53 @@ async function deletePersonaCard(personaId, btn) {
   }
 }
 
-// ─── RENDER RADIAL HUB DIAGRAM (SVG, built from real AI data) ─
+// ─── RENDER PERSONA PROFILE CARD (uses real AI data) ──────────
 function renderPersonaDiagram(p) {
   const container = document.getElementById('persona-diagram-container');
   if (!container) return;
 
   const initials = p.name.substring(0, 2).toUpperCase();
 
-  // Helper to wrap text into tspans for SVG (no auto-wrap in SVG)
-  function wrapText(text, maxCharsPerLine) {
-    const words = text.split(' ');
-    const lines = [];
-    let current = '';
-    words.forEach(w => {
-      if ((current + ' ' + w).trim().length > maxCharsPerLine) {
-        lines.push(current.trim());
-        current = w;
-      } else {
-        current = (current + ' ' + w).trim();
-      }
-    });
-    if (current) lines.push(current);
-    return lines.slice(0, 3); // max 3 lines
+  function escapeHTML(str) {
+    return String(str ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
-  function tspans(text, x, startY, lineHeight, maxChars) {
-    const lines = wrapText(text, maxChars);
-    return lines.map((line, i) =>
-      `<tspan x="${x}" y="${startY + i * lineHeight}">${escapeXML(line)}</tspan>`
-    ).join('');
+  // Turn a "a | b | c" string into individual chips
+  function chipList(value) {
+    return String(value ?? '')
+      .split('|')
+      .map(v => v.trim())
+      .filter(Boolean)
+      .map(v => `<span class="persona-chip">${escapeHTML(v)}</span>`)
+      .join('');
   }
 
-  function escapeXML(str) {
-    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  }
-
-  // Branch definitions: [label, value, color, angle position]
-  const branches = [
-    { title: '📍 Demographics', value: `${p.age} years old\n${p.occupation}`, color: '#0f9d58', bg: '#e6f7ee' },
-    { title: '🎯 Needs', value: p.needs, color: '#2563eb', bg: '#eaf1fd' },
-    { title: '📱 Channels', value: p.channels, color: '#d97706', bg: '#fef3e0' },
-    { title: '😣 Pain point', value: p.pain_point, color: '#dc2626', bg: '#fde9e9' },
-    { title: '💡 Motivator', value: p.motivator, color: '#7c3aed', bg: '#f1eafd' }
+  const attrs = [
+    { label: 'Needs',           body: `<div class="persona-chip-row">${chipList(p.needs)}</div>` },
+    { label: 'Preferred channels', body: `<div class="persona-chip-row">${chipList(p.channels)}</div>` },
+    { label: 'Pain point',       body: `<p class="persona-attr-text">${escapeHTML(p.pain_point)}</p>` },
+    { label: 'What motivates them', body: `<p class="persona-attr-text">${escapeHTML(p.motivator)}</p>` },
   ];
 
-  const svgHeight = 520;
-  const centerX = 340, centerY = 230;
-
-  // 5 branch positions around the hub (top, upper-right, lower-right, lower-left, upper-left)
-  const positions = [
-    { x: 340, y: 70,  anchor: 'middle' },
-    { x: 560, y: 170, anchor: 'start'  },
-    { x: 500, y: 400, anchor: 'start'  },
-    { x: 180, y: 400, anchor: 'end'    },
-    { x: 120, y: 170, anchor: 'end'    }
-  ];
-
-  let svg = `<svg width="100%" viewBox="0 0 680 ${svgHeight}" role="img">
-    <title>Persona diagram for ${escapeXML(p.name)}</title>
-    <desc>Radial diagram showing demographics, needs, channels, pain point, and motivator for persona ${escapeXML(p.name)}</desc>
-    <defs>
-      <marker id="pa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </marker>
-    </defs>`;
-
-  // Connector lines from hub to each branch box
-  branches.forEach((b, i) => {
-    const pos = positions[i];
-    const dx = pos.x - centerX, dy = pos.y - centerY;
-    const dist = Math.sqrt(dx*dx + dy*dy);
-    const startX = centerX + (dx/dist) * 55;
-    const startY = centerY + (dy/dist) * 55;
-    const endX = pos.x + (pos.anchor === 'middle' ? 0 : pos.anchor === 'start' ? -10 : 10);
-    const endY = pos.y + 20;
-    svg += `<line x1="${startX.toFixed(1)}" y1="${startY.toFixed(1)}" x2="${endX}" y2="${endY}" stroke="${b.color}" stroke-width="1.5" opacity="0.5"/>`;
-  });
-
-  // Center hub circle
-  svg += `<circle cx="${centerX}" cy="${centerY}" r="55" fill="#0f9d58" opacity="0.12"/>
-    <circle cx="${centerX}" cy="${centerY}" r="55" fill="none" stroke="#0f9d58" stroke-width="1.5"/>
-    <text x="${centerX}" y="${centerY - 8}" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#065f46">${escapeXML(initials)}</text>
-    <text x="${centerX}" y="${centerY + 14}" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#065f46">${escapeXML(p.name)}</text>`;
-
-  // Branch boxes
-  branches.forEach((b, i) => {
-    const pos = positions[i];
-    const boxWidth = 180;
-    const boxX = pos.anchor === 'middle' ? pos.x - boxWidth/2 : pos.anchor === 'start' ? pos.x : pos.x - boxWidth;
-    const boxY = pos.y - 14;
-    const textX = pos.anchor === 'middle' ? pos.x : pos.anchor === 'start' ? pos.x + 12 : pos.x - 12;
-
-    svg += `<g>
-      <rect x="${boxX}" y="${boxY}" width="${boxWidth}" height="76" rx="8" fill="${b.bg}" stroke="${b.color}" stroke-width="0.5"/>
-      <text x="${textX}" y="${boxY + 20}" text-anchor="${pos.anchor}" font-size="13" font-weight="500" fill="${b.color}">${escapeXML(b.title)}</text>
-      <text x="${textX}" y="${boxY + 40}" text-anchor="${pos.anchor}" font-size="12" fill="${b.color}" opacity="0.85">
-        ${tspans(b.value.replace(/\|/g, ' · '), textX, boxY + 40, 15, 26)}
-      </text>
-    </g>`;
-  });
-
-  svg += `</svg>`;
-
-  container.innerHTML = `<div style="background:white; border:1px solid var(--line); border-radius:12px; padding:10px;">${svg}</div>`;
+  container.innerHTML = `
+    <div class="persona-card">
+      <div class="persona-card-header">
+        <div class="persona-avatar">${escapeHTML(initials)}</div>
+        <div>
+          <div class="persona-name">${escapeHTML(p.name)}</div>
+          <div class="persona-meta">${escapeHTML(p.age)} yrs old · ${escapeHTML(p.occupation)}</div>
+        </div>
+      </div>
+      <div class="persona-attrs">
+        ${attrs.map(a => `
+          <div class="persona-attr">
+            <div class="persona-attr-label">${a.label}</div>
+            ${a.body}
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
 }
 // ─── GOAL TRACKER PAGE ────────────────────────────────────────
 
@@ -1671,12 +1694,20 @@ document.addEventListener('click', (e) => {
 
 // Load dashboard when entering app (after login)
 function enterApp(user) {
+  isLoggedIn = true; // FIX: this was never being set, so every nav click re-triggered the login screen
+  currentUser = user;
   authView.style.display = 'none';
-  appView.style.display  = 'block';
+  appView.style.display  = 'flex';
 
   appPages.forEach(page => page.style.display = 'none');
   const targetPage = document.getElementById(`page-${pendingTargetPage}`);
   if (targetPage) targetPage.style.display = 'block';
+  setActiveNav(pendingTargetPage);
+
+  const nameEl = document.getElementById('sidebar-user-name');
+  const bizEl  = document.getElementById('sidebar-user-biz');
+  if (nameEl) nameEl.textContent = user.owner_name;
+  if (bizEl)  bizEl.textContent  = `${user.business_type} · ${user.location}`;
 
   showToast(`Welcome, ${user.owner_name}! ⚡`);
   setTimeout(loadDashboard, 300);
