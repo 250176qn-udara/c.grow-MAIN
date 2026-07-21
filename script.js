@@ -153,6 +153,91 @@ const authView = document.getElementById('auth-view');
 const appView = document.getElementById('app-view');
 const appPages = document.querySelectorAll('.app-page');
 
+// ─── REAL BUSINESS PHOTOS (free-to-use, Pexels) ───────────────
+// Used by both the landing-page hero carousel and the dashboard Gallery page.
+const BUSINESS_PHOTOS = [
+  { id: 10375824, caption: 'Neighborhood Café',     credit: 'RDNE Stock project',  url: 'https://images.pexels.com/photos/10375824/pexels-photo-10375824.jpeg?auto=compress&cs=tinysrgb&w=1200' },
+  { id: 10375818, caption: 'Coffee Shop Owner',      credit: 'RDNE Stock project',  url: 'https://images.pexels.com/photos/10375818/pexels-photo-10375818.jpeg?auto=compress&cs=tinysrgb&w=1200' },
+  { id: 10375881, caption: 'Family-Run Café',        credit: 'RDNE Stock project',  url: 'https://images.pexels.com/photos/10375881/pexels-photo-10375881.jpeg?auto=compress&cs=tinysrgb&w=1200' },
+  { id: 36729740, caption: 'Modern Coffee Bar',       credit: 'Vitaly Gariev',       url: 'https://images.pexels.com/photos/36729740/pexels-photo-36729740.jpeg?auto=compress&cs=tinysrgb&w=1200' },
+  { id: 36729524, caption: 'Grand Opening Day',       credit: 'Vitaly Gariev',       url: 'https://images.pexels.com/photos/36729524/pexels-photo-36729524.jpeg?auto=compress&cs=tinysrgb&w=1200' },
+  { id: 36729517, caption: 'Corner Shop',             credit: 'Vitaly Gariev',       url: 'https://images.pexels.com/photos/36729517/pexels-photo-36729517.jpeg?auto=compress&cs=tinysrgb&w=1200' },
+  { id: 36729528, caption: 'Partners in Business',    credit: 'Vitaly Gariev',       url: 'https://images.pexels.com/photos/36729528/pexels-photo-36729528.jpeg?auto=compress&cs=tinysrgb&w=1200' },
+  { id: 12729102, caption: 'Fashion Boutique',        credit: 'Aysegul Aytoren',     url: 'https://images.pexels.com/photos/12729102/pexels-photo-12729102.jpeg?auto=compress&cs=tinysrgb&w=1200' },
+  { id: 5410138,  caption: 'Flower Shop',             credit: 'Amina Filkins',       url: 'https://images.pexels.com/photos/5410138/pexels-photo-5410138.jpeg?auto=compress&cs=tinysrgb&w=1200' },
+  { id: 367724,   caption: 'Hair & Beauty Salon',     credit: 'Tiffany Bumgardner',  url: 'https://images.pexels.com/photos/367724/pexels-photo-367724.jpeg?auto=compress&cs=tinysrgb&w=1200' },
+];
+
+// Reusable auto-playing crossfade carousel.
+// containerId: element to render into. photos: subset/order of BUSINESS_PHOTOS.
+// interval: ms between slides.
+function initCarousel(containerId, photos, interval = 4000) {
+  const host = document.getElementById(containerId);
+  if (!host) return;
+
+  let current = 0;
+  let timer = null;
+
+  host.innerHTML = `
+    <div class="carousel-track">
+      ${photos.map((p, i) => `
+        <div class="carousel-slide${i === 0 ? ' active' : ''}" data-index="${i}">
+          <img src="${p.url}" alt="${p.caption}" loading="${i === 0 ? 'eager' : 'lazy'}">
+          <div class="carousel-caption">${p.caption}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="carousel-dots">
+      ${photos.map((_, i) => `<button class="carousel-dot${i === 0 ? ' active' : ''}" data-goto="${i}" aria-label="Slide ${i + 1}"></button>`).join('')}
+    </div>
+    <button class="carousel-arrow carousel-prev" aria-label="Previous slide">‹</button>
+    <button class="carousel-arrow carousel-next" aria-label="Next slide">›</button>
+  `;
+
+  const slides = host.querySelectorAll('.carousel-slide');
+  const dots   = host.querySelectorAll('.carousel-dot');
+
+  function goTo(index) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (index + photos.length) % photos.length;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  function play() { timer = setInterval(next, interval); }
+  function pause() { clearInterval(timer); }
+
+  host.querySelector('.carousel-next').addEventListener('click', () => { next(); pause(); play(); });
+  host.querySelector('.carousel-prev').addEventListener('click', () => { prev(); pause(); play(); });
+  dots.forEach(dot => dot.addEventListener('click', () => { goTo(parseInt(dot.dataset.goto)); pause(); play(); }));
+  host.addEventListener('mouseenter', pause);
+  host.addEventListener('mouseleave', play);
+
+  play();
+}
+
+// Landing page hero carousel starts immediately (script loads at end of body, DOM is ready)
+initCarousel('landing-carousel', BUSINESS_PHOTOS, 4000);
+
+// Dashboard Gallery page: carousel + browsable grid (also initialized up front;
+// it's hidden via display:none until the user navigates there, same as the landing one)
+initCarousel('gallery-carousel', BUSINESS_PHOTOS, 5000);
+
+(function renderGalleryGrid() {
+  const grid = document.getElementById('gallery-grid');
+  if (!grid) return;
+  grid.innerHTML = BUSINESS_PHOTOS.map(p => `
+    <div class="gallery-tile">
+      <img src="${p.url}" alt="${p.caption}" loading="lazy">
+      <div class="gallery-tile-caption">${p.caption}</div>
+    </div>
+  `).join('');
+})();
+
 // ─── FLOATING DASHBOARD ILLUSTRATIONS ─────────────────────────
 // Decorative only (aria-hidden). Animation is CSS (floatUp keyframe);
 // this just randomizes each illustration so the drift feels organic
@@ -218,6 +303,10 @@ const PAGE_TITLES = {
   report:     'Monthly Report',
   knowledge:  'Knowledge Base',
   promotions: 'Promotion Ideas',
+  gallery:    'Gallery',
+  targets:    'Target List',
+  diary:      "Today's Diary",
+  calendar:   'Calendar',
 };
 
 function setActiveNav(pageId) {
@@ -252,6 +341,9 @@ function navigateToPage(pageId) {
         case 'advisor':   loadAdvisorHistory(); break;
         case 'generator': loadSavedPosts(); break;
         case 'persona':   loadPersonaList(); break;
+        case 'targets':   loadTargets(); break;
+        case 'diary':     loadDiary(); break;
+        case 'calendar':  loadCalendarEvents(); break;
       }
     }, 0);
 
@@ -479,6 +571,373 @@ if (registerForm) {
     }
   });
 }
+
+// ─── TARGET LIST PAGE ─────────────────────────────────────────
+let currentTargetFilter = 'all';
+
+const TARGET_STATUS_META = {
+  not_contacted:  { label: 'Not Contacted',  color: 'var(--muted)' },
+  contacted:      { label: 'Contacted',      color: 'var(--blue)' },
+  in_talks:       { label: 'In Talks',       color: 'var(--amber)' },
+  converted:      { label: 'Converted',      color: 'var(--green)' },
+  not_interested: { label: 'Not Interested', color: 'var(--coral)' },
+};
+
+function toggleTargetForm() {
+  const box = document.getElementById('target-form-box');
+  box.style.display = box.style.display === 'none' ? 'block' : 'none';
+}
+
+async function submitTarget() {
+  const businessName = document.getElementById('target-business-name').value.trim();
+  if (!businessName) { showToast('❌ Business name is required'); return; }
+
+  const formData = new FormData();
+  formData.append('action', 'create_target');
+  formData.append('business_name', businessName);
+  formData.append('contact_name', document.getElementById('target-contact-name').value.trim());
+  formData.append('business_type', document.getElementById('target-business-type').value.trim());
+  formData.append('location', document.getElementById('target-location').value.trim());
+  formData.append('contact_info', document.getElementById('target-contact-info').value.trim());
+  formData.append('notes', document.getElementById('target-notes').value.trim());
+
+  try {
+    const res  = await fetch('targets.php', { method: 'POST', body: formData });
+    const data = await res.json();
+
+    if (data.success) {
+      showToast('Added to target list!');
+      ['target-business-name','target-contact-name','target-business-type','target-location','target-contact-info','target-notes']
+        .forEach(id => document.getElementById(id).value = '');
+      toggleTargetForm();
+      loadTargets();
+    } else {
+      showToast('❌ ' + data.message);
+    }
+  } catch {
+    showToast('❌ Connection error.');
+  }
+}
+
+function filterTargets(status) {
+  currentTargetFilter = status;
+  loadTargets();
+}
+
+async function loadTargets() {
+  const list = document.getElementById('targets-list');
+  if (!list) return;
+
+  try {
+    const res  = await fetch(`targets.php?action=get_targets&status=${encodeURIComponent(currentTargetFilter)}`);
+    const data = await res.json();
+    if (!data.success) { list.innerHTML = `<div style="color:var(--muted); padding:20px;">Could not load targets.</div>`; return; }
+
+    renderTargetSummary(data.counts);
+    renderTargetFilters();
+
+    if (data.targets.length === 0) {
+      list.innerHTML = `<div style="text-align:center; padding:36px 20px; background:white; border-radius:var(--radius-lg); border:1px dashed var(--line);">
+        <p style="color:var(--muted); font-size:13px;">No targets yet. Add the first business you want to reach out to.</p>
+      </div>`;
+      return;
+    }
+
+    list.innerHTML = data.targets.map(t => {
+      const meta = TARGET_STATUS_META[t.status] || TARGET_STATUS_META.not_contacted;
+      return `
+      <div class="target-row">
+        <div class="target-row-main">
+          <div class="target-row-name">${t.business_name}</div>
+          <div class="target-row-sub">
+            ${[t.contact_name, t.business_type, t.location].filter(Boolean).join(' · ') || 'No details yet'}
+          </div>
+          ${t.notes ? `<div class="target-row-notes">${t.notes}</div>` : ''}
+        </div>
+        <select class="target-status-select" style="color:${meta.color}; border-color:${meta.color};" onchange="updateTargetStatus(${t.id}, this.value)">
+          ${Object.entries(TARGET_STATUS_META).map(([val, m]) =>
+            `<option value="${val}" ${t.status === val ? 'selected' : ''}>${m.label}</option>`).join('')}
+        </select>
+        <button class="target-row-delete" onclick="deleteTargetItem(${t.id})">×</button>
+      </div>`;
+    }).join('');
+
+  } catch {
+    list.innerHTML = `<div style="color:var(--muted); padding:20px;">Connection error.</div>`;
+  }
+}
+
+function renderTargetSummary(counts) {
+  const el = document.getElementById('target-summary');
+  if (!el) return;
+  const total = Object.values(counts || {}).reduce((a, b) => a + b, 0);
+  el.innerHTML = `
+    <div class="target-summary-chip"><strong>${total}</strong> total</div>
+    ${Object.entries(TARGET_STATUS_META).map(([key, m]) =>
+      `<div class="target-summary-chip" style="color:${m.color};"><strong>${counts?.[key] || 0}</strong> ${m.label}</div>`).join('')}
+  `;
+}
+
+function renderTargetFilters() {
+  const el = document.getElementById('target-filters');
+  if (!el) return;
+  const options = [{ key: 'all', label: 'All' }, ...Object.entries(TARGET_STATUS_META).map(([key, m]) => ({ key, label: m.label }))];
+  el.innerHTML = options.map(o => `
+    <button class="filter-pill ${currentTargetFilter === o.key ? 'active' : ''}" onclick="filterTargets('${o.key}')">${o.label}</button>
+  `).join('');
+}
+
+async function updateTargetStatus(targetId, status) {
+  const formData = new FormData();
+  formData.append('action', 'update_status');
+  formData.append('target_id', targetId);
+  formData.append('status', status);
+
+  try {
+    const res  = await fetch('targets.php', { method: 'POST', body: formData });
+    const data = await res.json();
+    if (data.success) { showToast('Status updated'); loadTargets(); }
+    else showToast('❌ ' + data.message);
+  } catch {
+    showToast('❌ Connection error.');
+  }
+}
+
+async function deleteTargetItem(targetId) {
+  const formData = new FormData();
+  formData.append('action', 'delete_target');
+  formData.append('target_id', targetId);
+
+  try {
+    const res  = await fetch('targets.php', { method: 'POST', body: formData });
+    const data = await res.json();
+    if (data.success) { showToast('Removed'); loadTargets(); }
+    else showToast('❌ ' + data.message);
+  } catch {
+    showToast('❌ Connection error.');
+  }
+}
+
+
+// ─── TODAY'S DIARY PAGE ───────────────────────────────────────
+const DIARY_MOODS = [
+  { key: 'great', emoji: '😄', label: 'Great' },
+  { key: 'good',  emoji: '🙂', label: 'Good' },
+  { key: 'okay',  emoji: '😐', label: 'Okay' },
+  { key: 'tough', emoji: '😕', label: 'Tough' },
+  { key: 'bad',   emoji: '😞', label: 'Bad' },
+];
+let selectedDiaryMood = 'okay';
+
+function renderMoodPicker() {
+  const el = document.getElementById('diary-mood-picker');
+  if (!el) return;
+  el.innerHTML = DIARY_MOODS.map(m => `
+    <button type="button" class="diary-mood-btn ${selectedDiaryMood === m.key ? 'active' : ''}" onclick="pickDiaryMood('${m.key}')">
+      <span style="font-size:22px;">${m.emoji}</span>
+      <span style="font-size:11px;">${m.label}</span>
+    </button>
+  `).join('');
+}
+
+function pickDiaryMood(mood) {
+  selectedDiaryMood = mood;
+  renderMoodPicker();
+}
+
+async function loadDiary() {
+  const today = new Date().toISOString().slice(0, 10);
+  const label = document.getElementById('diary-date-label');
+  if (label) {
+    label.textContent = new Date().toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  // Load today's entry (if it exists) to prefill the form
+  try {
+    const res  = await fetch(`diary.php?action=get_entry&date=${today}`);
+    const data = await res.json();
+    if (data.success && data.entry) {
+      selectedDiaryMood = data.entry.mood;
+      document.getElementById('diary-what-worked').value = data.entry.what_worked || '';
+      document.getElementById('diary-what-didnt').value  = data.entry.what_didnt || '';
+      document.getElementById('diary-notes').value       = data.entry.notes || '';
+    } else {
+      selectedDiaryMood = 'okay';
+      document.getElementById('diary-what-worked').value = '';
+      document.getElementById('diary-what-didnt').value  = '';
+      document.getElementById('diary-notes').value       = '';
+    }
+    renderMoodPicker();
+  } catch {
+    renderMoodPicker();
+  }
+
+  loadDiaryHistory();
+}
+
+async function saveDiaryEntry() {
+  const today = new Date().toISOString().slice(0, 10);
+  const formData = new FormData();
+  formData.append('action', 'save_entry');
+  formData.append('entry_date', today);
+  formData.append('mood', selectedDiaryMood);
+  formData.append('what_worked', document.getElementById('diary-what-worked').value.trim());
+  formData.append('what_didnt', document.getElementById('diary-what-didnt').value.trim());
+  formData.append('notes', document.getElementById('diary-notes').value.trim());
+
+  try {
+    const res  = await fetch('diary.php', { method: 'POST', body: formData });
+    const data = await res.json();
+    if (data.success) { showToast("Today's entry saved!"); loadDiaryHistory(); }
+    else showToast('❌ ' + data.message);
+  } catch {
+    showToast('❌ Connection error.');
+  }
+}
+
+async function loadDiaryHistory() {
+  const host = document.getElementById('diary-history');
+  if (!host) return;
+  const monthYear = new Date().toISOString().slice(0, 7);
+
+  try {
+    const res  = await fetch(`diary.php?action=get_entries&month=${monthYear}`);
+    const data = await res.json();
+    if (!data.success || data.entries.length === 0) {
+      host.innerHTML = `<div style="color:var(--muted); font-size:13px;">No past entries yet this month.</div>`;
+      return;
+    }
+    host.innerHTML = data.entries.map(e => {
+      const moodMeta = DIARY_MOODS.find(m => m.key === e.mood) || DIARY_MOODS[2];
+      const dateLabel = new Date(e.entry_date + 'T00:00:00').toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+      return `
+      <div class="diary-history-row">
+        <div class="diary-history-emoji">${moodMeta.emoji}</div>
+        <div style="flex:1; min-width:0;">
+          <div style="font-weight:700; font-size:13px; color:var(--navy);">${dateLabel}</div>
+          ${e.what_worked ? `<div style="font-size:12px; color:var(--text); margin-top:2px;"><strong>Worked:</strong> ${e.what_worked}</div>` : ''}
+          ${e.what_didnt ? `<div style="font-size:12px; color:var(--text);"><strong>Didn't:</strong> ${e.what_didnt}</div>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  } catch {
+    host.innerHTML = `<div style="color:var(--muted); font-size:13px;">Connection error.</div>`;
+  }
+}
+
+
+// ─── CALENDAR PAGE ────────────────────────────────────────────
+let calendarViewDate = new Date();
+
+function toggleEventForm() {
+  const box = document.getElementById('event-form-box');
+  box.style.display = box.style.display === 'none' ? 'block' : 'none';
+  if (box.style.display === 'block') {
+    document.getElementById('event-date').value = calendarViewDate.toISOString().slice(0, 10);
+  }
+}
+
+async function submitEvent() {
+  const title = document.getElementById('event-title').value.trim();
+  const date  = document.getElementById('event-date').value;
+  if (!title || !date) { showToast('❌ Title and date are required'); return; }
+
+  const formData = new FormData();
+  formData.append('action', 'create_event');
+  formData.append('title', title);
+  formData.append('event_date', date);
+  formData.append('event_time', document.getElementById('event-time').value);
+  formData.append('notes', document.getElementById('event-notes').value.trim());
+
+  try {
+    const res  = await fetch('calendar.php', { method: 'POST', body: formData });
+    const data = await res.json();
+    if (data.success) {
+      showToast('Event added!');
+      ['event-title','event-time','event-notes'].forEach(id => document.getElementById(id).value = '');
+      toggleEventForm();
+      loadCalendarEvents();
+    } else {
+      showToast('❌ ' + data.message);
+    }
+  } catch {
+    showToast('❌ Connection error.');
+  }
+}
+
+function changeCalendarMonth(delta) {
+  calendarViewDate.setMonth(calendarViewDate.getMonth() + delta);
+  loadCalendarEvents();
+}
+
+async function loadCalendarEvents() {
+  const list  = document.getElementById('calendar-events-list');
+  const label = document.getElementById('calendar-month-label');
+  if (!list) return;
+
+  const monthYear = calendarViewDate.toISOString().slice(0, 7);
+  if (label) label.textContent = calendarViewDate.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+
+  try {
+    const res  = await fetch(`calendar.php?action=get_events&month=${monthYear}`);
+    const data = await res.json();
+    if (!data.success || data.events.length === 0) {
+      list.innerHTML = `<div style="text-align:center; padding:36px 20px; background:white; border-radius:var(--radius-lg); border:1px dashed var(--line);">
+        <p style="color:var(--muted); font-size:13px;">No events this month.</p>
+      </div>`;
+      return;
+    }
+
+    list.innerHTML = data.events.map(e => {
+      const dateLabel = new Date(e.event_date + 'T00:00:00').toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+      const timeLabel = e.event_time ? e.event_time.slice(0, 5) : '';
+      return `
+      <div class="calendar-event-row ${e.is_done ? 'done' : ''}">
+        <button class="calendar-event-check" onclick="toggleEventDone(${e.id}, ${e.is_done ? 0 : 1})">${e.is_done ? '✓' : ''}</button>
+        <div style="flex:1; min-width:0;">
+          <div class="calendar-event-title">${e.title}</div>
+          <div class="calendar-event-meta">${dateLabel}${timeLabel ? ' · ' + timeLabel : ''}</div>
+          ${e.notes ? `<div class="calendar-event-notes">${e.notes}</div>` : ''}
+        </div>
+        <button class="target-row-delete" onclick="deleteEventItem(${e.id})">×</button>
+      </div>`;
+    }).join('');
+  } catch {
+    list.innerHTML = `<div style="color:var(--muted); padding:20px;">Connection error.</div>`;
+  }
+}
+
+async function toggleEventDone(eventId, isDone) {
+  const formData = new FormData();
+  formData.append('action', 'toggle_done');
+  formData.append('event_id', eventId);
+  formData.append('is_done', isDone);
+
+  try {
+    const res  = await fetch('calendar.php', { method: 'POST', body: formData });
+    const data = await res.json();
+    if (data.success) loadCalendarEvents();
+    else showToast('❌ ' + data.message);
+  } catch {
+    showToast('❌ Connection error.');
+  }
+}
+
+async function deleteEventItem(eventId) {
+  const formData = new FormData();
+  formData.append('action', 'delete_event');
+  formData.append('event_id', eventId);
+
+  try {
+    const res  = await fetch('calendar.php', { method: 'POST', body: formData });
+    const data = await res.json();
+    if (data.success) { showToast('Event deleted'); loadCalendarEvents(); }
+    else showToast('❌ ' + data.message);
+  } catch {
+    showToast('❌ Connection error.');
+  }
+}
+
 
 // ─── COMMUNITY PAGE ───────────────────────────────────────────
 
@@ -879,6 +1338,84 @@ document.querySelectorAll('.app-route-btn').forEach(btn => {
   }
 });
 
+// ─── AI ADVISOR CHAT (upgraded: markdown, timestamps, quick replies, images) ─
+
+// Very small markdown-lite renderer — enough for **bold** and "- " bullet lists
+// without pulling in a full markdown library. Escapes HTML first for safety.
+function renderMarkdownLite(text) {
+  const escape = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const escaped = escape(text);
+  const lines = escaped.split('\n');
+  let html = '';
+  let inList = false;
+
+  lines.forEach(line => {
+    const bulletMatch = line.match(/^\s*[-*]\s+(.*)/);
+    if (bulletMatch) {
+      if (!inList) { html += '<ul class="chat-bullets">'; inList = true; }
+      html += `<li>${bulletMatch[1]}</li>`;
+    } else {
+      if (inList) { html += '</ul>'; inList = false; }
+      if (line.trim() === '') { html += '<br>'; }
+      else { html += `<p style="margin:0 0 6px;">${line}</p>`; }
+    }
+  });
+  if (inList) html += '</ul>';
+
+  // Bold: **text**
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  return html;
+}
+
+function formatChatTime(dateInput) {
+  const d = dateInput ? new Date(dateInput.replace(' ', 'T')) : new Date();
+  if (isNaN(d)) return '';
+  return d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
+}
+
+function chatBubbleHTML(sender, text, timestamp) {
+  const cls = sender === 'user' ? 'user' : 'ai';
+  const body = sender === 'user' ? escapeHtmlSimple(text) : renderMarkdownLite(text);
+  return `
+    <div class="chat-bubble ${cls}">
+      <div class="chat-bubble-body">${body}</div>
+      <div class="chat-bubble-time">${formatChatTime(timestamp)}</div>
+    </div>`;
+}
+
+function escapeHtmlSimple(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// Keyword → suggested follow-up prompts. Lightweight, client-side, no extra API cost.
+const QUICK_REPLY_RULES = [
+  { keywords: ['instagram', 'sns', 'social media'], reply: 'Give me an Instagram post idea' },
+  { keywords: ['google business', 'google map', 'gbp'], reply: 'How do I improve my Google Business listing?' },
+  { keywords: ['goal', 'target'], reply: 'Check my current goals' },
+  { keywords: ['budget', 'cost', 'cheap', 'low-cost'], reply: 'How can I market with a very small budget?' },
+  { keywords: ['review', 'testimonial'], reply: 'How do I get more customer reviews?' },
+  { keywords: ['line', 'community'], reply: 'How should I use LINE to reach customers?' },
+];
+const DEFAULT_QUICK_REPLIES = ['What should I focus on this week?', 'Give me a quick win idea', 'How am I doing overall?'];
+
+function renderQuickReplies(aiText) {
+  const host = document.getElementById('advisor-quick-replies');
+  if (!host) return;
+
+  const lower = (aiText || '').toLowerCase();
+  const matched = QUICK_REPLY_RULES.filter(r => r.keywords.some(k => lower.includes(k))).map(r => r.reply);
+  const chips = [...new Set(matched)].slice(0, 3);
+  while (chips.length < 3 && DEFAULT_QUICK_REPLIES[chips.length]) chips.push(DEFAULT_QUICK_REPLIES[chips.length]);
+
+  host.innerHTML = chips.map(c => `<button class="chat-chip" onclick="sendQuickReply(this)">${c}</button>`).join('');
+}
+
+function sendQuickReply(btn) {
+  document.getElementById('advisor-input').value = btn.textContent;
+  document.getElementById('advisor-quick-replies').innerHTML = '';
+  sendAdvisorMessage();
+}
+
 async function loadAdvisorHistory() {
   const chat = document.getElementById('advisor-chat');
   if (!chat) return;
@@ -888,17 +1425,17 @@ async function loadAdvisorHistory() {
     const data = await res.json();
 
     if (!data.success || data.messages.length === 0) {
-      // Show default welcome message
-      chat.innerHTML = '<div class="chat-bubble ai">👋 Welcome! What specific marketing goal are we targeting today?</div>';
+      chat.innerHTML = '<div class="chat-bubble ai"><div class="chat-bubble-body">👋 Welcome! What specific marketing goal are we targeting today?</div></div>';
+      document.getElementById('advisor-quick-replies').innerHTML = '';
       return;
     }
 
-    // Render saved messages
-    chat.innerHTML = data.messages.map(msg => `
-      <div class="chat-bubble ${msg.sender === 'user' ? 'user' : 'ai'}">
-        ${msg.message_text}
-      </div>
-    `).join('');
+    chat.innerHTML = data.messages.map(msg =>
+      chatBubbleHTML(msg.sender, msg.message_text, msg.created_at)
+    ).join('');
+
+    const lastAi = [...data.messages].reverse().find(m => m.sender === 'ai');
+    if (lastAi) renderQuickReplies(lastAi.message_text);
 
     scrollChatToBottom();
 
@@ -914,12 +1451,11 @@ async function sendAdvisorMessage() {
 
   if (!message) return;
 
-  // Show user message immediately
-  chat.innerHTML += `<div class="chat-bubble user">${message}</div>`;
+  document.getElementById('advisor-quick-replies').innerHTML = '';
+  chat.innerHTML += chatBubbleHTML('user', message);
   input.value = '';
   scrollChatToBottom();
 
-  // Show typing indicator
   const typingId = 'typing-' + Date.now();
   chat.innerHTML += `
     <div id="${typingId}" class="chat-typing">
@@ -935,20 +1471,71 @@ async function sendAdvisorMessage() {
     const res  = await fetch('advisor.php', { method: 'POST', body: formData });
     const data = await res.json();
 
-    // Remove typing indicator
     document.getElementById(typingId)?.remove();
 
     if (data.success) {
-      chat.innerHTML += `<div class="chat-bubble ai">${data.reply}</div>`;
+      chat.innerHTML += chatBubbleHTML('ai', data.reply);
+      renderQuickReplies(data.reply);
     } else {
-      chat.innerHTML += `<div class="chat-bubble ai">❌ ${data.message}</div>`;
+      chat.innerHTML += chatBubbleHTML('ai', '❌ ' + data.message);
     }
 
     scrollChatToBottom();
 
   } catch {
     document.getElementById(typingId)?.remove();
-    chat.innerHTML += `<div class="chat-bubble ai">❌ Connection error. Is Laragon running?</div>`;
+    chat.innerHTML += chatBubbleHTML('ai', '❌ Connection error. Is Laragon running?');
+    scrollChatToBottom();
+  }
+}
+
+// Generate a marketing image from whatever's in the chat input
+async function generateChatImage() {
+  const input   = document.getElementById('advisor-input');
+  const chat    = document.getElementById('advisor-chat');
+  const prompt  = input.value.trim();
+
+  if (!prompt) { showToast('❌ Describe the image you want first'); return; }
+
+  document.getElementById('advisor-quick-replies').innerHTML = '';
+  chat.innerHTML += chatBubbleHTML('user', '🎨 ' + prompt);
+  input.value = '';
+  scrollChatToBottom();
+
+  const typingId = 'typing-' + Date.now();
+  chat.innerHTML += `
+    <div id="${typingId}" class="chat-typing">
+      <span></span><span></span><span></span>
+    </div>`;
+  scrollChatToBottom();
+
+  const formData = new FormData();
+  formData.append('action', 'generate_image');
+  formData.append('prompt', prompt);
+
+  try {
+    const res  = await fetch('advisor.php', { method: 'POST', body: formData });
+    const data = await res.json();
+
+    document.getElementById(typingId)?.remove();
+
+    if (data.success) {
+      chat.innerHTML += `
+        <div class="chat-bubble ai">
+          <div class="chat-bubble-body">
+            ${data.text ? renderMarkdownLite(data.text) : ''}
+            <img src="data:${data.mime_type};base64,${data.image_base64}" class="chat-generated-image" alt="AI generated image">
+          </div>
+          <div class="chat-bubble-time">${formatChatTime()}</div>
+        </div>`;
+    } else {
+      chat.innerHTML += chatBubbleHTML('ai', '❌ ' + data.message);
+    }
+    scrollChatToBottom();
+
+  } catch {
+    document.getElementById(typingId)?.remove();
+    chat.innerHTML += chatBubbleHTML('ai', '❌ Connection error while generating the image.');
     scrollChatToBottom();
   }
 }
@@ -960,7 +1547,8 @@ async function clearAdvisorChat() {
   try {
     await fetch('advisor.php', { method: 'POST', body: formData });
     const chat = document.getElementById('advisor-chat');
-    chat.innerHTML = '<div class="chat-bubble ai">👋 Welcome! What specific marketing goal are we targeting today?</div>';
+    chat.innerHTML = '<div class="chat-bubble ai"><div class="chat-bubble-body">👋 Welcome! What specific marketing goal are we targeting today?</div></div>';
+    document.getElementById('advisor-quick-replies').innerHTML = '';
     showToast('Chat cleared');
   } catch {
     showToast('❌ Could not clear chat.');

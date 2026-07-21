@@ -12,12 +12,16 @@ if (!isset($_SESSION['user_id'])) {
 
 require_once __DIR__ . '/env.php';
 define('GEMINI_URL', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' . GEMINI_API_KEY);
+// Image-capable model. Requires your Gemini API key to have access to image output —
+// if this errors out, check the Google AI Studio console for model availability.
+define('GEMINI_IMAGE_URL', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent?key=' . GEMINI_API_KEY);
 
 $action = $_POST['action'] ?? $_GET['action'] ?? '';
 
 match($action) {
-    'get_history'   => getHistory(),
-    'send_message'  => sendMessage(),
+    'get_history'    => getHistory(),
+    'send_message'   => sendMessage(),
+    'generate_image' => generateImage(),
     'clear_history' => clearHistory(),
     default         => respond(false, 'Invalid action')
 };
@@ -110,7 +114,8 @@ If they have active goals, help them work toward those goals.
 If their checklist completion is low, gently encourage daily habits.
 Keep responses concise (2-4 sentences or a short bullet list).
 Focus on low-cost strategies: Instagram, Google Business, LINE, local community marketing.
-Always speak in a warm, encouraging, mentor-like tone — this is a beginner who needs confidence.";
+Always speak in a warm, encouraging, mentor-like tone — this is a beginner who needs confidence.
+Use simple markdown when it helps readability: **bold** for key terms, and \"- \" bullet points for lists.";
 
     // ── Save user message ─────────────────────────────────────
     $stmt = $pdo->prepare(
@@ -173,6 +178,85 @@ Always speak in a warm, encouraging, mentor-like tone — this is a beginner who
     $stmt->execute([$userId, 'ai', $aiReply]);
 
     respond(true, 'OK', ['reply' => $aiReply]);
+}
+
+
+// ─── GENERATE AN IMAGE (marketing visuals, via Gemini image model) ─
+function generateImage(): void {
+    $prompt = trim($_POST['prompt'] ?? '');
+    if (!$prompt) respond(false, 'Please describe the image you want');
+
+    $pdo    = getDB();
+    $userId = $_SESSION['user_id'];
+
+    // Save the request itself as a user chat message, so it shows in history
+    $stmt = $pdo->prepare(
+        'INSERT INTO advisor_messages (user_id, sender, message_text) VALUES (?, ?, ?)'
+    );
+    $stmt->execute([$userId, 'user', '🎨 ' . $prompt]);
+
+    $payload = json_encode([
+        'contents' => [
+            ['role' => 'user', 'parts' => [['text' => $prompt]]]
+        ],
+        'generationConfig' => [
+            'responseModalities' => ['TEXT', 'IMAGE']
+        ]
+    ]);
+
+    $ch = curl_init(GEMINI_IMAGE_URL);
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST           => true,
+        CURLOPT_POSTFIELDS     => $payload,
+        CURLOPT_HTTPHEADER     => ['Content-Type: application/json'],
+        CURLOPT_TIMEOUT        => 30,
+    ]);
+
+    $response  = curl_exec($ch);
+    $curlError = curl_error($ch);
+    curl_close($ch);
+
+    if ($curlError) respond(false, 'Could not reach AI image service: ' . $curlError);
+
+    $geminiData = json_decode($response, true);
+    $parts      = $geminiData['candidates'][0]['content']['parts'] ?? null;
+
+    if ($parts === null) {
+        $errMsg = $geminiData['error']['message'] ?? json_encode($geminiData);
+        respond(false, 'Gemini image API error: ' . $errMsg);
+    }
+
+    // Find the image part (inlineData) and any accompanying text
+    $imageBase64 = null;
+    $mimeType    = 'image/png';
+    $textReply   = '';
+    foreach ($parts as $part) {
+        if (isset($part['inlineData'])) {
+            $imageBase64 = $part['inlineData']['data'];
+            $mimeType    = $part['inlineData']['mimeType'] ?? 'image/png';
+        }
+        if (isset($part['text'])) {
+            $textReply .= $part['text'];
+        }
+    }
+
+    if (!$imageBase64) {
+        respond(false, 'The AI did not return an image. Try describing it differently.');
+    }
+
+    // Store a lightweight placeholder in history (not the full base64, to keep rows small)
+    $historyText = $textReply ? $textReply : '[Generated an image for: ' . $prompt . ']';
+    $stmt = $pdo->prepare(
+        'INSERT INTO advisor_messages (user_id, sender, message_text) VALUES (?, ?, ?)'
+    );
+    $stmt->execute([$userId, 'ai', $historyText]);
+
+    respond(true, 'OK', [
+        'image_base64' => $imageBase64,
+        'mime_type'     => $mimeType,
+        'text'          => $textReply,
+    ]);
 }
 
 

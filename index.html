@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GrowEasy — AI Marketing for Small Business</title>
-  <link rel="stylesheet" href="style.css?v=5" />
+  <link rel="stylesheet" href="style.css?v=7" />
 </head>
 <body>
 
@@ -103,6 +103,16 @@
           <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:25%"></div></div>
         </div>
       </div>
+    </section>
+
+    <section class="section" style="padding-top: 10px;">
+      <div class="section-header">
+        <div class="eyebrow">Real businesses, real growth</div>
+        <h2>Small business owners like you</h2>
+        <p>Cafés, boutiques, salons, and more — the kinds of businesses GrowEasy is built for.</p>
+      </div>
+      <div id="landing-carousel" class="carousel"></div>
+      <p class="photo-credit">Photos via Pexels — free to use</p>
     </section>
 
     <section class="section" id="features">
@@ -432,13 +442,19 @@
         <button class="side-link app-route-btn" data-page="goals"><span class="side-link-icon">🏆</span>Goals</button>
         <button class="side-link app-route-btn" data-page="report"><span class="side-link-icon">📊</span>Report</button>
 
+        <div class="nav-group-label">Plan</div>
+        <button class="side-link app-route-btn" data-page="diary"><span class="side-link-icon">📔</span>Today's Diary</button>
+        <button class="side-link app-route-btn" data-page="calendar"><span class="side-link-icon">🗓️</span>Calendar</button>
+
         <div class="nav-group-label">Connect</div>
+        <button class="side-link app-route-btn" data-page="targets"><span class="side-link-icon">🎯</span>Target List</button>
         <button class="side-link app-route-btn" data-page="community"><span class="side-link-icon">👥</span>Community</button>
         <button class="side-link app-route-btn" data-page="stories"><span class="side-link-icon">📈</span>Success Stories</button>
 
         <div class="nav-group-label">Learn</div>
         <button class="side-link app-route-btn" data-page="knowledge"><span class="side-link-icon">📚</span>Knowledge Base</button>
         <button class="side-link app-route-btn" data-page="promotions"><span class="side-link-icon">💡</span>Promotion Ideas</button>
+        <button class="side-link app-route-btn" data-page="gallery"><span class="side-link-icon">🖼️</span>Gallery</button>
       </nav>
 
       <div class="app-sidebar-footer">
@@ -542,9 +558,11 @@
         <p style="color: var(--muted); margin-bottom: 20px;">Get real customized strategies for your specific industry.</p>
 
         <!-- Chat Window -->
-        <div id="advisor-chat" style="border:1px solid var(--line); height:340px; border-radius:20px; padding:18px; background:var(--soft); margin-bottom:15px; overflow-y:auto; display:flex; flex-direction:column; gap:10px;">
+        <div id="advisor-chat" style="border:1px solid var(--line); height:340px; border-radius:20px; padding:18px; background:var(--soft); margin-bottom:10px; overflow-y:auto; display:flex; flex-direction:column; gap:10px;">
           <div class="chat-bubble ai">👋 Welcome! What specific marketing goal are we targeting today?</div>
         </div>
+
+        <div id="advisor-quick-replies" class="chat-quick-replies"></div>
 
         <!-- Input -->
         <div style="display:flex; gap:10px;">
@@ -557,6 +575,7 @@
             onblur="this.style.borderColor='var(--line)'"
             onkeydown="if(event.key==='Enter') sendAdvisorMessage()"
           >
+          <button class="btn secondary" onclick="generateChatImage()" title="Generate an image from your message" style="padding:0 18px; font-size:16px;">🎨</button>
           <button class="btn primary" onclick="sendAdvisorMessage()" style="padding:0 26px;">Send</button>
         </div>
       </div>
@@ -898,11 +917,166 @@
         </div>
       </div>
 
+      <!-- TARGET LIST PAGE -->
+      <div id="page-targets" class="app-page" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; flex-wrap:wrap; gap:10px;">
+          <h2 style="color:var(--navy);">Target List</h2>
+          <button class="btn primary" style="padding:10px 20px; font-size:14px;" onclick="toggleTargetForm()">+ Add Target</button>
+        </div>
+        <p style="color:var(--muted); margin-bottom:16px;">Track businesses and customers you want to reach out to.</p>
+
+        <!-- Status summary chips -->
+        <div id="target-summary" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px;"></div>
+
+        <!-- Add Target Form -->
+        <div id="target-form-box" style="display:none; background:white; border-radius:var(--radius-lg); padding:22px; margin-bottom:22px; border:1px solid var(--line); box-shadow:0 4px 16px rgba(45,49,66,0.04);">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:14px; margin-bottom:14px;">
+            <div>
+              <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Business name *</label>
+              <input type="text" id="target-business-name" placeholder="e.g. Sakura Bakery"
+                style="width:100%; padding:10px 14px; border-radius:8px; border:1px solid var(--line); font-size:14px; outline:none; box-sizing:border-box;">
+            </div>
+            <div>
+              <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Contact name</label>
+              <input type="text" id="target-contact-name" placeholder="e.g. Tanaka-san"
+                style="width:100%; padding:10px 14px; border-radius:8px; border:1px solid var(--line); font-size:14px; outline:none; box-sizing:border-box;">
+            </div>
+            <div>
+              <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Business type</label>
+              <input type="text" id="target-business-type" placeholder="e.g. Café"
+                style="width:100%; padding:10px 14px; border-radius:8px; border:1px solid var(--line); font-size:14px; outline:none; box-sizing:border-box;">
+            </div>
+            <div>
+              <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Location</label>
+              <input type="text" id="target-location" placeholder="e.g. Yokohama"
+                style="width:100%; padding:10px 14px; border-radius:8px; border:1px solid var(--line); font-size:14px; outline:none; box-sizing:border-box;">
+            </div>
+            <div>
+              <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Contact info</label>
+              <input type="text" id="target-contact-info" placeholder="phone / email / SNS"
+                style="width:100%; padding:10px 14px; border-radius:8px; border:1px solid var(--line); font-size:14px; outline:none; box-sizing:border-box;">
+            </div>
+          </div>
+          <div style="margin-bottom:16px;">
+            <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Notes</label>
+            <textarea id="target-notes" rows="2" placeholder="Anything worth remembering..."
+              style="width:100%; padding:10px 14px; border-radius:8px; border:1px solid var(--line); font-size:14px; outline:none; resize:vertical; box-sizing:border-box; font-family:inherit;"></textarea>
+          </div>
+          <div style="display:flex; justify-content:flex-end; gap:10px;">
+            <button onclick="toggleTargetForm()" style="background:none; border:none; color:var(--muted); cursor:pointer; font-size:14px;">Cancel</button>
+            <button class="btn primary" onclick="submitTarget()" style="padding:10px 24px; font-size:14px;">Add to List</button>
+          </div>
+        </div>
+
+        <!-- Filter pills -->
+        <div id="target-filters" style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;"></div>
+
+        <!-- Targets list -->
+        <div id="targets-list" style="display:flex; flex-direction:column; gap:10px;">
+          <div style="text-align:center; padding:40px; color:var(--muted);">Loading...</div>
+        </div>
+      </div>
+
+      <!-- TODAY'S DIARY PAGE -->
+      <div id="page-diary" class="app-page" style="display:none;">
+        <h2 style="color:var(--navy); margin-bottom:5px;">Today's Diary</h2>
+        <p style="color:var(--muted); margin-bottom:20px;">A quick daily reflection — how did today go?</p>
+
+        <div class="diary-card">
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px; flex-wrap:wrap; gap:8px;">
+            <div id="diary-date-label" style="font-weight:800; color:var(--navy); font-size:15px;"></div>
+            <div style="font-size:12px; color:var(--muted);">Autosaves per day — one entry per date</div>
+          </div>
+
+          <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:8px;">How was today?</label>
+          <div id="diary-mood-picker" class="diary-mood-picker"></div>
+
+          <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin:18px 0 6px;">What worked well?</label>
+          <textarea id="diary-what-worked" rows="2" placeholder="e.g. The lunchtime Instagram post got more views than usual"
+            style="width:100%; padding:10px 14px; border-radius:8px; border:1px solid var(--line); font-size:14px; outline:none; resize:vertical; box-sizing:border-box; font-family:inherit;"></textarea>
+
+          <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin:14px 0 6px;">What didn't work?</label>
+          <textarea id="diary-what-didnt" rows="2" placeholder="e.g. Nobody replied to the LINE broadcast"
+            style="width:100%; padding:10px 14px; border-radius:8px; border:1px solid var(--line); font-size:14px; outline:none; resize:vertical; box-sizing:border-box; font-family:inherit;"></textarea>
+
+          <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin:14px 0 6px;">Free notes</label>
+          <textarea id="diary-notes" rows="3" placeholder="Anything else on your mind..."
+            style="width:100%; padding:10px 14px; border-radius:8px; border:1px solid var(--line); font-size:14px; outline:none; resize:vertical; box-sizing:border-box; font-family:inherit;"></textarea>
+
+          <div style="display:flex; justify-content:flex-end; margin-top:16px;">
+            <button class="btn primary" onclick="saveDiaryEntry()" style="padding:10px 26px; font-size:14px;">Save Today's Entry</button>
+          </div>
+        </div>
+
+        <h3 style="color:var(--navy); font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; margin:28px 0 12px;">Past Entries This Month</h3>
+        <div id="diary-history" style="display:flex; flex-direction:column; gap:10px;"></div>
+      </div>
+
+      <!-- CALENDAR PAGE -->
+      <div id="page-calendar" class="app-page" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; flex-wrap:wrap; gap:10px;">
+          <h2 style="color:var(--navy);">Calendar</h2>
+          <button class="btn primary" style="padding:10px 20px; font-size:14px;" onclick="toggleEventForm()">+ Add Event</button>
+        </div>
+        <p style="color:var(--muted); margin-bottom:20px;">Appointments and to-dos, organized by date.</p>
+
+        <!-- Add Event Form -->
+        <div id="event-form-box" style="display:none; background:white; border-radius:var(--radius-lg); padding:22px; margin-bottom:22px; border:1px solid var(--line); box-shadow:0 4px 16px rgba(45,49,66,0.04);">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:14px; margin-bottom:14px;">
+            <div style="grid-column: 1 / -1;">
+              <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Title *</label>
+              <input type="text" id="event-title" placeholder="e.g. Meet supplier about packaging"
+                style="width:100%; padding:10px 14px; border-radius:8px; border:1px solid var(--line); font-size:14px; outline:none; box-sizing:border-box;">
+            </div>
+            <div>
+              <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Date *</label>
+              <input type="date" id="event-date"
+                style="width:100%; padding:10px 14px; border-radius:8px; border:1px solid var(--line); font-size:14px; outline:none; box-sizing:border-box;">
+            </div>
+            <div>
+              <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Time (optional)</label>
+              <input type="time" id="event-time"
+                style="width:100%; padding:10px 14px; border-radius:8px; border:1px solid var(--line); font-size:14px; outline:none; box-sizing:border-box;">
+            </div>
+          </div>
+          <div style="margin-bottom:16px;">
+            <label style="display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">Notes</label>
+            <textarea id="event-notes" rows="2" placeholder="Optional details..."
+              style="width:100%; padding:10px 14px; border-radius:8px; border:1px solid var(--line); font-size:14px; outline:none; resize:vertical; box-sizing:border-box; font-family:inherit;"></textarea>
+          </div>
+          <div style="display:flex; justify-content:flex-end; gap:10px;">
+            <button onclick="toggleEventForm()" style="background:none; border:none; color:var(--muted); cursor:pointer; font-size:14px;">Cancel</button>
+            <button class="btn primary" onclick="submitEvent()" style="padding:10px 24px; font-size:14px;">Add Event</button>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+          <button onclick="changeCalendarMonth(-1)" style="background:var(--soft); border:none; width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:16px; color:var(--navy);">‹</button>
+          <div id="calendar-month-label" style="font-weight:800; color:var(--navy); font-size:15px;"></div>
+          <button onclick="changeCalendarMonth(1)" style="background:var(--soft); border:none; width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:16px; color:var(--navy);">›</button>
+        </div>
+
+        <div id="calendar-events-list" style="display:flex; flex-direction:column; gap:10px;">
+          <div style="text-align:center; padding:40px; color:var(--muted);">Loading...</div>
+        </div>
+      </div>
+
+      <!-- GALLERY PAGE -->
+      <div id="page-gallery" class="app-page" style="display:none;">
+        <h2 style="color:var(--navy); margin-bottom:5px;">Gallery</h2>
+        <p style="color:var(--muted); margin-bottom:20px;">Real small businesses — cafés, boutiques, and salons — for a bit of inspiration.</p>
+
+        <div id="gallery-carousel" class="carousel gallery-carousel"></div>
+
+        <div id="gallery-grid" class="gallery-grid"></div>
+        <p class="photo-credit">Photos via Pexels — free to use</p>
+      </div>
+
       </main>
     </div>
   </div>
 
   <div id="toast" class="toast"></div>
-  <script src="script.js?v=5"></script>
+  <script src="script.js?v=7"></script>
 </body>
 </html>
